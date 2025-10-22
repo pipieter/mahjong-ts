@@ -7,6 +7,7 @@ import { Riichi } from "../src/yaku/riichi";
 import { Haitei } from "../src/yaku/haitei";
 import { Houtei } from "../src/yaku/houtei";
 import { mockConfig, verifyUnique } from "./mock";
+import { RiichiCall } from "../src/yaku/yaku";
 
 describe("yaku tanyao", () => {
   test("non-terminals and non-honors result in tanyao", () => {
@@ -51,7 +52,7 @@ describe("yaku riichi", () => {
     const hand = verifyUnique(tiles);
     const riichi = new Riichi();
     const config = mockConfig();
-    config.riichi = true;
+    config.riichi = RiichiCall.Riichi;
 
     expect(riichi.check(hand, config)).toEqual(true);
   });
@@ -63,7 +64,7 @@ describe("yaku riichi", () => {
     const hand = verifyUnique(tiles);
     const riichi = new Riichi();
     const config = mockConfig();
-    config.riichi = false;
+    config.riichi = RiichiCall.None;
 
     expect(riichi.check(hand, config)).toEqual(false);
   });

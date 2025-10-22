@@ -1,8 +1,14 @@
 import { Hand } from "../hand";
 
+export enum RiichiCall {
+  None,
+  Riichi,
+  Double,
+}
+
 export interface YakuConfig {
   /** Was the hand in riichi. */
-  riichi: boolean;
+  riichi: RiichiCall;
   /** Did the hand win by tsumo. If false, it is assumed the hand was won by ron. */
   tsumo: boolean;
   /** Number of tiles that remained in the walls at the time of win. */

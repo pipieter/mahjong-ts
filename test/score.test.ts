@@ -2,7 +2,7 @@ import { describe, expect, test } from "@jest/globals";
 import { Tiles } from "../src/tile";
 import { mockConfig, verifyUnique } from "./mock";
 import { Scorer } from "../src/score";
-import { YakuId } from "../src/yaku/yaku";
+import { RiichiCall, YakuId } from "../src/yaku/yaku";
 
 describe("basic scoring", () => {
   test("score tanyao tsumo", () => {
@@ -11,7 +11,7 @@ describe("basic scoring", () => {
     const hand = verifyUnique(tiles);
     const config = mockConfig();
     config.tsumo = true;
-    config.riichi = false;
+    config.riichi = RiichiCall.None;
 
     const scorer = new Scorer(config);
     const score = scorer.score(hand);

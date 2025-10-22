@@ -5,7 +5,7 @@ import { Houtei } from "./yaku/houtei";
 import { Riichi } from "./yaku/riichi";
 import { Tanyao } from "./yaku/tanyao";
 import { Tsumo } from "./yaku/tsumo";
-import { Yaku, YakuId } from "./yaku/yaku";
+import { RiichiCall, Yaku, YakuId } from "./yaku/yaku";
 
 export interface Score {
   yakus: YakuId[];
@@ -13,7 +13,7 @@ export interface Score {
 }
 
 export interface ScoreConfig {
-  riichi: boolean;
+  riichi: RiichiCall;
   tsumo: boolean;
   dealer: boolean;
   dora: Tile[];
@@ -28,7 +28,7 @@ export class Scorer {
 
   constructor(config: Partial<ScoreConfig>) {
     this.config = {
-      riichi: config.riichi ?? false,
+      riichi: config.riichi ?? RiichiCall.None,
       tsumo: config.tsumo ?? false,
       dealer: config.dealer ?? false,
       dora: config.dora ?? [],
