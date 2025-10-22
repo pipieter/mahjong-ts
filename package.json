@@ -9,7 +9,8 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "prettier": "prettier src/*.ts src/**/*.ts test/*.ts --write"
+    "prettier": "prettier src/*.ts src/**/*.ts test/*.ts --write",
+    "prepare": "npm run build"
   },
   "dependencies": {
     "typescript": "^5.9.3"
