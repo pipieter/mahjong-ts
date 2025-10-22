@@ -18,6 +18,7 @@ export interface YakuConfig {
 export enum YakuId {
   Tanyao = "tanyao",
   Riichi = "riichi",
+  DoubleRiichi = "double riichi",
   Tsumo = "tsumo",
   Haitei = "haitei",
   Houtei = "houtei",

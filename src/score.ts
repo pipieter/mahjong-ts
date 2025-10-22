@@ -1,5 +1,6 @@
 import { Hand } from "./hand";
 import { Tile } from "./tile";
+import { DoubleRiichi } from "./yaku/doubleriichi";
 import { Haitei } from "./yaku/haitei";
 import { Houtei } from "./yaku/houtei";
 import { Riichi } from "./yaku/riichi";
@@ -37,7 +38,7 @@ export class Scorer {
       wallCount: config.wallCount ?? 0,
     };
 
-    this.yakus = [new Tanyao(), new Tsumo(), new Riichi(), new Haitei(), new Houtei()];
+    this.yakus = [new Tanyao(), new Tsumo(), new Riichi(), new Haitei(), new Houtei(), new DoubleRiichi()];
   }
 
   public score(hand: Hand): Score {
