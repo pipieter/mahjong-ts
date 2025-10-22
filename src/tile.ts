@@ -20,7 +20,7 @@ export class Tile {
   }
 
   public toString(): string {
-    return `${this.number()}${this.suit()}`;
+    return `${this.suit()}${this.number()}`;
   }
 }
 

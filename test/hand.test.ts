@@ -3,9 +3,9 @@ import { Hand, Meld } from "../src/hand";
 import { Tiles } from "../src/tile";
 
 test("basic meld ids", () => {
-  expect(new Meld([Tiles.Man1, Tiles.Man2, Tiles.Man3], true).toString()).toEqual("o1m2m3m");
-  expect(new Meld([Tiles.Sou3, Tiles.Sou3, Tiles.Sou3, Tiles.Sou3], false).toString()).toEqual("c3s3s3s3s");
-  expect(new Meld([Tiles.Haku, Tiles.Haku, Tiles.Haku], false).toString()).toEqual("c5j5j5j");
+  expect(new Meld([Tiles.Man1, Tiles.Man2, Tiles.Man3], true).toString()).toEqual("om1m2m3");
+  expect(new Meld([Tiles.Sou3, Tiles.Sou3, Tiles.Sou3, Tiles.Sou3], false).toString()).toEqual("cs3s3s3s3");
+  expect(new Meld([Tiles.Haku, Tiles.Haku, Tiles.Haku], false).toString()).toEqual("cj5j5j5");
 });
 
 test("completed hand find single hand", () => {
