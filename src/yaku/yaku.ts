@@ -11,6 +11,8 @@ export interface YakuConfig {
 
 export enum YakuId {
   Tanyao = "tanyao",
+  Riichi = "riichi",
+  Tsumo = "tsumo",
 }
 
 export abstract class Yaku {

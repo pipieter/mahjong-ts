@@ -215,4 +215,12 @@ export class CompletedHand {
   public tiles(): Tile[] {
     return this.melds.flatMap((meld) => meld.tiles);
   }
+
+  public isOpen(): boolean {
+    return this.melds.some((meld) => meld.open);
+  }
+
+  public isClosed(): boolean {
+    return !this.isOpen();
+  }
 }
