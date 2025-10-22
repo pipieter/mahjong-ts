@@ -9,6 +9,7 @@ import { Houtei } from "../src/yaku/houtei";
 import { mockConfig, verifyUnique } from "./mock";
 import { RiichiCall } from "../src/yaku/yaku";
 import { DoubleRiichi } from "../src/yaku/doubleriichi";
+import { ClosedHoniisou, OpenHoniisou } from "../src/yaku/honiisou";
 
 describe("yaku tanyao", () => {
   test("non-terminals and non-honors result in tanyao", () => {
@@ -207,5 +208,64 @@ describe("yaku double riichi", () => {
     config.riichi = RiichiCall.Double;
 
     expect(riichi.check(hand, config)).toEqual(true);
+  });
+});
+
+describe("yaku honiisou", () => {
+  test("open honiisou and closed honiisou are incompatible", () => {
+    // prettier-ignore
+    const open   = verifyUnique([Tiles.Sou1, Tiles.Sou2, Tiles.Sou3, Tiles.Sou5, Tiles.Sou5, Tiles.Sou5, Tiles.Haku, Tiles.Haku, Tiles.Haku, Tiles.Nan, Tiles.Nan], [new Meld([Tiles.Sou9, Tiles.Sou9, Tiles.Sou9], true)]);
+    // prettier-ignore
+    const closed = verifyUnique([Tiles.Sou1, Tiles.Sou2, Tiles.Sou3, Tiles.Sou5, Tiles.Sou5, Tiles.Sou5, Tiles.Haku, Tiles.Haku, Tiles.Haku, Tiles.Nan, Tiles.Nan, Tiles.Sou9, Tiles.Sou9, Tiles.Sou9]);
+
+    const openHoniisou = new OpenHoniisou();
+    const closedHoniisou = new ClosedHoniisou();
+    const config = mockConfig();
+
+    expect(openHoniisou.check(open, config)).toEqual(true);
+    expect(openHoniisou.check(closed, config)).toEqual(false);
+
+    expect(closedHoniisou.check(open, config)).toEqual(false);
+    expect(closedHoniisou.check(closed, config)).toEqual(true);
+  });
+
+  test("honiisou requires exactly two suits", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Pei, Tiles.Pei, Tiles.Pei, Tiles.Haku, Tiles.Haku, Tiles.Haku, Tiles.Nan, Tiles.Nan, Tiles.Nan, Tiles.Chun, Tiles.Chun]);
+
+    const honiisou = new ClosedHoniisou();
+    const config = mockConfig();
+
+    expect(honiisou.check(hand, config)).toEqual(true);
+  });
+
+  test("honiisou requires more than one suit", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Nan, Tiles.Nan, Tiles.Nan, Tiles.Pei, Tiles.Pei, Tiles.Pei, Tiles.Haku, Tiles.Haku, Tiles.Haku, Tiles.Nan, Tiles.Nan, Tiles.Nan, Tiles.Chun, Tiles.Chun]);
+
+    const honiisou = new ClosedHoniisou();
+    const config = mockConfig();
+
+    expect(honiisou.check(hand, config)).toEqual(false);
+  });
+
+  test("honiisou requires less than three suits", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Man3, Tiles.Man3, Tiles.Man3, Tiles.Haku, Tiles.Haku, Tiles.Haku, Tiles.Nan, Tiles.Nan, Tiles.Nan, Tiles.Chun, Tiles.Chun]);
+
+    const honiisou = new ClosedHoniisou();
+    const config = mockConfig();
+
+    expect(honiisou.check(hand, config)).toEqual(false);
+  });
+
+  test("honiisou requires at least one honor tile", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou2, Tiles.Sou2, Tiles.Sou2, Tiles.Sou8, Tiles.Sou8, Tiles.Sou8, Tiles.Man2, Tiles.Man2, Tiles.Man2, Tiles.Man5, Tiles.Man5]);
+
+    const honiisou = new ClosedHoniisou();
+    const config = mockConfig();
+
+    expect(honiisou.check(hand, config)).toEqual(false);
   });
 });
