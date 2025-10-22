@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@jest/globals";
 import { Tiles } from "../src/tile";
-import { Hand, Meld } from "../src/hand";
+import { Meld } from "../src/hand";
 import { Tanyao } from "../src/yaku/tanyao";
 import { Tsumo } from "../src/yaku/tsumo";
 import { Riichi } from "../src/yaku/riichi";
