@@ -93,31 +93,6 @@ export class Meld {
 }
 
 /**
- * Incomplete hand consisting of thirteen tiles, or more including kans.
- */
-export class Hand {
-  public readonly tiles: Tile[];
-  public readonly melds: Meld[];
-
-  /**
-   * @param tiles List of tiles that are closed in hand.
-   * @param melds List of called melds, including closed kans.
-   */
-  constructor(tiles: Tile[], melds: Meld[]) {
-    this.tiles = tiles;
-    this.melds = melds;
-  }
-
-  /**
-   * Check if the hand is open.
-   * @returns Whether or not the hand is open.
-   */
-  public isOpen(): boolean {
-    return this.melds.some((meld) => meld.open);
-  }
-}
-
-/**
  * Completed hand consisting of fourteen tiles, or more including kans.
  */
 export class CompletedHand {
