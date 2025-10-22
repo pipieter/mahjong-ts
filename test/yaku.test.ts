@@ -1,16 +1,10 @@
 import { describe, expect, test } from "@jest/globals";
-import { Tile, Tiles } from "../src/tile";
-import { CompletedHand, Meld } from "../src/hand";
+import { Tiles } from "../src/tile";
+import { Meld } from "../src/hand";
 import { Tanyao } from "../src/yaku/tanyao";
 import { Tsumo } from "../src/yaku/tsumo";
 import { Riichi } from "../src/yaku/riichi";
-import { mockConfig } from "./mock";
-
-function verifyUnique(tiles: Tile[], melds: Meld[] = []): CompletedHand {
-  const hands = CompletedHand.find(tiles, melds);
-  expect(hands.length).toEqual(1);
-  return hands[0];
-}
+import { mockConfig, verifyUnique } from "./mock";
 
 describe("yaku tanyao", () => {
   test("non-terminals and non-honors result in tanyao", () => {
