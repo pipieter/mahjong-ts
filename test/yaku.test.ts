@@ -4,6 +4,8 @@ import { Meld } from "../src/hand";
 import { Tanyao } from "../src/yaku/tanyao";
 import { Tsumo } from "../src/yaku/tsumo";
 import { Riichi } from "../src/yaku/riichi";
+import { Haitei } from "../src/yaku/haitei";
+import { Houtei } from "../src/yaku/houtei";
 import { mockConfig, verifyUnique } from "./mock";
 
 describe("yaku tanyao", () => {
@@ -105,5 +107,87 @@ describe("yaku tsumo", () => {
 
     expect(hand.isOpen()).toEqual(true);
     expect(tsumo.check(hand, config)).toEqual(false);
+  });
+});
+
+describe("yaku haitei", () => {
+  test("zero tiles remaining and tsumo results in haitei", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou2, Tiles.Sou3, Tiles.Sou4, Tiles.Man4, Tiles.Man4, Tiles.Man4, Tiles.Pin5, Tiles.Pin6, Tiles.Pin7, Tiles.Pin8, Tiles.Pin8, Tiles.Pin8, Tiles.Sou7, Tiles.Sou7];
+
+    const hand = verifyUnique(tiles);
+    const haitei = new Haitei();
+    const config = mockConfig();
+    config.tsumo = true;
+    config.wallCount = 0;
+
+    expect(haitei.check(hand, config)).toEqual(true);
+  });
+
+  test("non-zero tiles remaining and tsumo does not result in haitei", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou2, Tiles.Sou3, Tiles.Sou4, Tiles.Man4, Tiles.Man4, Tiles.Man4, Tiles.Pin5, Tiles.Pin6, Tiles.Pin7, Tiles.Pin8, Tiles.Pin8, Tiles.Pin8, Tiles.Sou7, Tiles.Sou7];
+
+    const hand = verifyUnique(tiles);
+    const haitei = new Haitei();
+    const config = mockConfig();
+    config.tsumo = true;
+    config.wallCount = 20;
+
+    expect(haitei.check(hand, config)).toEqual(false);
+  });
+
+  test("zero tiles remaining and ron does not result in haitei", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou2, Tiles.Sou3, Tiles.Sou4, Tiles.Man4, Tiles.Man4, Tiles.Man4, Tiles.Pin5, Tiles.Pin6, Tiles.Pin7, Tiles.Pin8, Tiles.Pin8, Tiles.Pin8, Tiles.Sou7, Tiles.Sou7];
+
+    const hand = verifyUnique(tiles);
+    const haitei = new Haitei();
+    const config = mockConfig();
+    config.tsumo = false;
+    config.wallCount = 20;
+
+    expect(haitei.check(hand, config)).toEqual(false);
+  });
+});
+
+describe("yaku houtei", () => {
+  test("zero tiles remaining and ron results in houtei", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou2, Tiles.Sou3, Tiles.Sou4, Tiles.Man4, Tiles.Man4, Tiles.Man4, Tiles.Pin5, Tiles.Pin6, Tiles.Pin7, Tiles.Pin8, Tiles.Pin8, Tiles.Pin8, Tiles.Sou7, Tiles.Sou7];
+
+    const hand = verifyUnique(tiles);
+    const houtei = new Houtei();
+    const config = mockConfig();
+    config.tsumo = false;
+    config.wallCount = 0;
+
+    expect(houtei.check(hand, config)).toEqual(true);
+  });
+
+  test("non-zero tiles remaining and ron does not result in houtei", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou2, Tiles.Sou3, Tiles.Sou4, Tiles.Man4, Tiles.Man4, Tiles.Man4, Tiles.Pin5, Tiles.Pin6, Tiles.Pin7, Tiles.Pin8, Tiles.Pin8, Tiles.Pin8, Tiles.Sou7, Tiles.Sou7];
+
+    const hand = verifyUnique(tiles);
+    const houtei = new Houtei();
+    const config = mockConfig();
+    config.tsumo = false;
+    config.wallCount = 20;
+
+    expect(houtei.check(hand, config)).toEqual(false);
+  });
+
+  test("zero tiles remaining and tsumo does not result in houtei", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou2, Tiles.Sou3, Tiles.Sou4, Tiles.Man4, Tiles.Man4, Tiles.Man4, Tiles.Pin5, Tiles.Pin6, Tiles.Pin7, Tiles.Pin8, Tiles.Pin8, Tiles.Pin8, Tiles.Sou7, Tiles.Sou7];
+
+    const hand = verifyUnique(tiles);
+    const houtei = new Houtei();
+    const config = mockConfig();
+    config.tsumo = true;
+    config.wallCount = 20;
+
+    expect(houtei.check(hand, config)).toEqual(false);
   });
 });

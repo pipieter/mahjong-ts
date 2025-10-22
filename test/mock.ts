@@ -11,7 +11,7 @@ export function mockConfig(): ScoreConfig {
     dora: [],
     uradora: [],
     akadora: 0,
-    wallCount: 0,
+    wallCount: 10,
   };
 }
 
