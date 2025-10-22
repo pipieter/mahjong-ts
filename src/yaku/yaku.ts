@@ -13,7 +13,8 @@ export enum YakuId {
   Tanyao = "tanyao",
   Riichi = "riichi",
   Tsumo = "tsumo",
-  Haitei = "haitei"
+  Haitei = "haitei",
+  Houtei = "houtei",
 }
 
 export abstract class Yaku {
