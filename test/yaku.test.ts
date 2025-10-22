@@ -4,20 +4,12 @@ import { CompletedHand, Meld } from "../src/hand";
 import { Tanyao } from "../src/yaku/tanyao";
 import { Tsumo } from "../src/yaku/tsumo";
 import { Riichi } from "../src/yaku/riichi";
-import { YakuConfig } from "../src/yaku/yaku";
+import { mockConfig } from "./mock";
 
 function verifyUnique(tiles: Tile[], melds: Meld[] = []): CompletedHand {
   const hands = CompletedHand.find(tiles, melds);
   expect(hands.length).toEqual(1);
   return hands[0];
-}
-
-function defaultConfig(): YakuConfig {
-  return {
-    riichi: false,
-    tsumo: false,
-    wallCount: 0,
-  };
 }
 
 describe("yaku tanyao", () => {
@@ -27,7 +19,7 @@ describe("yaku tanyao", () => {
 
     const hand = verifyUnique(tiles);
     const tanyao = new Tanyao();
-    const config = defaultConfig();
+    const config = mockConfig();
 
     expect(tanyao.check(hand, config)).toEqual(true);
   });
@@ -38,7 +30,7 @@ describe("yaku tanyao", () => {
 
     const hand = verifyUnique(tiles);
     const tanyao = new Tanyao();
-    const config = defaultConfig();
+    const config = mockConfig();
 
     expect(tanyao.check(hand, config)).toEqual(false);
   });
@@ -49,7 +41,7 @@ describe("yaku tanyao", () => {
 
     const hand = verifyUnique(tiles);
     const tanyao = new Tanyao();
-    const config = defaultConfig();
+    const config = mockConfig();
 
     expect(tanyao.check(hand, config)).toEqual(false);
   });
@@ -62,7 +54,7 @@ describe("yaku riichi", () => {
 
     const hand = verifyUnique(tiles);
     const riichi = new Riichi();
-    const config = defaultConfig();
+    const config = mockConfig();
     config.riichi = true;
 
     expect(riichi.check(hand, config)).toEqual(true);
@@ -74,7 +66,7 @@ describe("yaku riichi", () => {
 
     const hand = verifyUnique(tiles);
     const riichi = new Riichi();
-    const config = defaultConfig();
+    const config = mockConfig();
     config.riichi = false;
 
     expect(riichi.check(hand, config)).toEqual(false);
@@ -88,7 +80,7 @@ describe("yaku tsumo", () => {
 
     const hand = verifyUnique(tiles);
     const tsumo = new Tsumo();
-    const config = defaultConfig();
+    const config = mockConfig();
     config.tsumo = true;
 
     expect(hand.isClosed()).toEqual(true);
@@ -101,7 +93,7 @@ describe("yaku tsumo", () => {
 
     const hand = verifyUnique(tiles);
     const tsumo = new Tsumo();
-    const config = defaultConfig();
+    const config = mockConfig();
     config.tsumo = false;
 
     expect(tsumo.check(hand, config)).toEqual(false);
@@ -114,7 +106,7 @@ describe("yaku tsumo", () => {
 
     const hand = verifyUnique(tiles, [meld]);
     const tsumo = new Tsumo();
-    const config = defaultConfig();
+    const config = mockConfig();
     config.tsumo = true;
 
     expect(hand.isOpen()).toEqual(true);
