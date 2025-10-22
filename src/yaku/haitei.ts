@@ -10,6 +10,6 @@ export class Haitei extends Yaku {
   public readonly yakuman = false;
 
   public check(_: Hand, config: YakuConfig): boolean {
-    return config.wallCount === 0 && !config.tsumo;
+    return config.wallCount === 0 && config.tsumo;
   }
 }
