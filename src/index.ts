@@ -7,3 +7,5 @@ export * from "./yaku/yaku";
 export * from "./yaku/tanyao";
 export * from "./yaku/riichi";
 export * from "./yaku/tsumo";
+export * from "./yaku/houtei";
+export * from "./yaku/haitei";
