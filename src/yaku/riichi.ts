@@ -1,5 +1,5 @@
 import { Hand } from "../hand";
-import { Yaku, YakuConfig, YakuId } from "./yaku";
+import { RiichiCall, Yaku, YakuConfig, YakuId } from "./yaku";
 
 export class Riichi extends Yaku {
   public readonly id = YakuId.Riichi;
@@ -10,6 +10,6 @@ export class Riichi extends Yaku {
   public readonly yakuman = false;
 
   public check(hand: Hand, config: YakuConfig): boolean {
-    return hand.isClosed() && config.riichi;
+    return hand.isClosed() && config.riichi === RiichiCall.Riichi;
   }
 }

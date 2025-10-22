@@ -2,10 +2,11 @@ import { expect } from "@jest/globals";
 import { Hand, Meld } from "../src/hand";
 import { ScoreConfig } from "../src/score";
 import { Tile } from "../src/tile";
+import { RiichiCall } from "../src/yaku/yaku";
 
 export function mockConfig(): ScoreConfig {
   return {
-    riichi: false,
+    riichi: RiichiCall.None,
     tsumo: false,
     dealer: false,
     dora: [],

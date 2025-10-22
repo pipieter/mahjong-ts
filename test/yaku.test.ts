@@ -7,6 +7,8 @@ import { Riichi } from "../src/yaku/riichi";
 import { Haitei } from "../src/yaku/haitei";
 import { Houtei } from "../src/yaku/houtei";
 import { mockConfig, verifyUnique } from "./mock";
+import { RiichiCall } from "../src/yaku/yaku";
+import { DoubleRiichi } from "../src/yaku/doubleriichi";
 
 describe("yaku tanyao", () => {
   test("non-terminals and non-honors result in tanyao", () => {
@@ -51,7 +53,7 @@ describe("yaku riichi", () => {
     const hand = verifyUnique(tiles);
     const riichi = new Riichi();
     const config = mockConfig();
-    config.riichi = true;
+    config.riichi = RiichiCall.Riichi;
 
     expect(riichi.check(hand, config)).toEqual(true);
   });
@@ -63,7 +65,7 @@ describe("yaku riichi", () => {
     const hand = verifyUnique(tiles);
     const riichi = new Riichi();
     const config = mockConfig();
-    config.riichi = false;
+    config.riichi = RiichiCall.None;
 
     expect(riichi.check(hand, config)).toEqual(false);
   });
@@ -189,5 +191,21 @@ describe("yaku houtei", () => {
     config.wallCount = 20;
 
     expect(houtei.check(hand, config)).toEqual(false);
+  });
+});
+
+describe("yaku double riichi", () => {
+  // Other riichi tests are performed in the "yaku riichi" suite
+
+  test("double riichi results in yaku", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou2, Tiles.Sou3, Tiles.Sou4, Tiles.Man4, Tiles.Man4, Tiles.Man4, Tiles.Pin5, Tiles.Pin6, Tiles.Pin7, Tiles.Pin8, Tiles.Pin8, Tiles.Pin8, Tiles.Sou7, Tiles.Sou7];
+
+    const hand = verifyUnique(tiles);
+    const riichi = new DoubleRiichi();
+    const config = mockConfig();
+    config.riichi = RiichiCall.Double;
+
+    expect(riichi.check(hand, config)).toEqual(true);
   });
 });
