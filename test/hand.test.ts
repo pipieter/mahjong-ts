@@ -107,7 +107,6 @@ test("complete hand find kokushi", () => {
   expect(hands[0].melds[0].isKokushiMusou()).toEqual(true);
 });
 
-
 test("complete hand find incomplete kokushi", () => {
   const tiles = [
     Tiles.Man1,
@@ -129,4 +128,3 @@ test("complete hand find incomplete kokushi", () => {
   const hands = CompletedHand.find(tiles, []);
   expect(hands.length).toEqual(0);
 });
-
