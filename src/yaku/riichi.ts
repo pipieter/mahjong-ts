@@ -1,4 +1,4 @@
-import { CompletedHand } from "../hand";
+import { Hand } from "../hand";
 import { Yaku, YakuConfig, YakuId } from "./yaku";
 
 export class Riichi extends Yaku {
@@ -9,7 +9,7 @@ export class Riichi extends Yaku {
   public readonly han = 1;
   public readonly yakuman = false;
 
-  public check(hand: CompletedHand, config: YakuConfig): boolean {
+  public check(hand: Hand, config: YakuConfig): boolean {
     return hand.isClosed() && config.riichi;
   }
 }

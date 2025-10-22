@@ -1,4 +1,4 @@
-import { CompletedHand } from "./hand";
+import { Hand } from "./hand";
 import { Tile } from "./tile";
 import { Riichi } from "./yaku/riichi";
 import { Tanyao } from "./yaku/tanyao";
@@ -38,7 +38,7 @@ export class Scorer {
     this.yakus = [new Tanyao(), new Tsumo(), new Riichi()];
   }
 
-  public score(hand: CompletedHand): Score {
+  public score(hand: Hand): Score {
     const score: Score = {
       yakus: [],
       han: 0,

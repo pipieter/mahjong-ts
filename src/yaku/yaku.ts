@@ -1,4 +1,4 @@
-import { CompletedHand } from "../hand";
+import { Hand } from "../hand";
 
 export interface YakuConfig {
   /** Was the hand in riichi. */
@@ -23,5 +23,5 @@ export abstract class Yaku {
   public abstract readonly han: number;
   public abstract readonly yakuman: boolean;
 
-  public abstract check(hand: CompletedHand, config: YakuConfig): boolean;
+  public abstract check(hand: Hand, config: YakuConfig): boolean;
 }

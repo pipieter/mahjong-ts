@@ -1,5 +1,5 @@
 import { expect, test } from "@jest/globals";
-import { CompletedHand, Meld } from "../src/hand";
+import { Hand, Meld } from "../src/hand";
 import { Tiles } from "../src/tile";
 
 test("basic meld ids", () => {
@@ -27,7 +27,7 @@ test("completed hand find single hand", () => {
     Tiles.Haku,
   ];
 
-  const hands = CompletedHand.find(tiles, []);
+  const hands = Hand.find(tiles, []);
 
   expect(hands.length).toEqual(1);
 });
@@ -51,7 +51,7 @@ test("complete hand find isshanten hand", () => {
     Tiles.Pin9,
   ];
 
-  const hands = CompletedHand.find(tiles, []);
+  const hands = Hand.find(tiles, []);
   expect(hands.length).toEqual(0);
 });
 
@@ -76,7 +76,7 @@ test("complete hand find chiitoitsu hand", () => {
     Tiles.Nan,
   ];
 
-  const hands = CompletedHand.find(tiles, []);
+  const hands = Hand.find(tiles, []);
   expect(hands.length).toEqual(1);
 
   const pairs = hands[0].melds;
@@ -101,7 +101,7 @@ test("complete hand find kokushi", () => {
     Tiles.Chun,
   ];
 
-  const hands = CompletedHand.find(tiles, []);
+  const hands = Hand.find(tiles, []);
   expect(hands.length).toEqual(1);
   expect(hands[0].melds.length).toEqual(1);
   expect(hands[0].melds[0].isKokushiMusou()).toEqual(true);
@@ -125,6 +125,6 @@ test("complete hand find incomplete kokushi", () => {
     Tiles.Sou5,
   ];
 
-  const hands = CompletedHand.find(tiles, []);
+  const hands = Hand.find(tiles, []);
   expect(hands.length).toEqual(0);
 });

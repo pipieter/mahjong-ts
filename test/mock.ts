@@ -1,5 +1,5 @@
 import { expect } from "@jest/globals";
-import { CompletedHand, Meld } from "../src/hand";
+import { Hand, Meld } from "../src/hand";
 import { ScoreConfig } from "../src/score";
 import { Tile } from "../src/tile";
 
@@ -15,8 +15,8 @@ export function mockConfig(): ScoreConfig {
   };
 }
 
-export function verifyUnique(tiles: Tile[], melds: Meld[] = []): CompletedHand {
-  const hands = CompletedHand.find(tiles, melds);
+export function verifyUnique(tiles: Tile[], melds: Meld[] = []): Hand {
+  const hands = Hand.find(tiles, melds);
   expect(hands.length).toEqual(1);
   return hands[0];
 }

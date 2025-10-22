@@ -95,7 +95,7 @@ export class Meld {
 /**
  * Completed hand consisting of fourteen tiles, or more including kans.
  */
-export class CompletedHand {
+export class Hand {
   public readonly melds: Meld[];
 
   constructor(melds: Meld[]) {
@@ -108,15 +108,15 @@ export class CompletedHand {
     return melds.join("+");
   }
 
-  public static find(tiles: Tile[], melds: Meld[] = []): CompletedHand[] {
-    const regular = CompletedHand.findRegular(tiles, melds);
-    const chiitoi = CompletedHand.findChiitoi(tiles, melds);
-    const kokushi = CompletedHand.findKokushi(tiles, melds);
+  public static find(tiles: Tile[], melds: Meld[] = []): Hand[] {
+    const regular = Hand.findRegular(tiles, melds);
+    const chiitoi = Hand.findChiitoi(tiles, melds);
+    const kokushi = Hand.findKokushi(tiles, melds);
 
     const hands = [...regular, ...chiitoi, ...kokushi];
 
     // TODO optimize this, see if duplicate hands can be filtered beforehand
-    const unique: CompletedHand[] = [];
+    const unique: Hand[] = [];
     const found: Set<string> = new Set();
 
     for (const hand of hands) {
@@ -130,7 +130,7 @@ export class CompletedHand {
     return unique;
   }
 
-  private static findRegular(tiles: Tile[], melds: Meld[]): CompletedHand[] {
+  private static findRegular(tiles: Tile[], melds: Meld[]): Hand[] {
     // TODO ensure regular hands have four melds and one pair
 
     if (tiles.length < 2) {
@@ -140,7 +140,7 @@ export class CompletedHand {
     if (tiles.length === 2) {
       const pair = new Meld(tiles, false);
       if (!pair.isPair()) return [];
-      return [new CompletedHand([...melds, pair])];
+      return [new Hand([...melds, pair])];
     }
 
     // At least three tiles remaining
@@ -150,13 +150,13 @@ export class CompletedHand {
       const meld = new Meld(permutation, false);
       if (!meld.isTriplet()) continue;
 
-      hands.push(...CompletedHand.findRegular(removeFromArray(tiles, permutation), [...melds, meld]));
+      hands.push(...Hand.findRegular(removeFromArray(tiles, permutation), [...melds, meld]));
     }
 
     return hands;
   }
 
-  private static findChiitoi(tiles: Tile[], melds: Meld[]): CompletedHand[] {
+  private static findChiitoi(tiles: Tile[], melds: Meld[]): Hand[] {
     if (melds.length > 0) {
       return [];
     }
@@ -173,16 +173,16 @@ export class CompletedHand {
       pairs.push(new Meld(pair, true));
     }
 
-    return [new CompletedHand(pairs)];
+    return [new Hand(pairs)];
   }
 
-  private static findKokushi(tiles: Tile[], melds: Meld[]): CompletedHand[] {
+  private static findKokushi(tiles: Tile[], melds: Meld[]): Hand[] {
     if (melds.length > 0) return [];
 
     const hands = [];
     const meld = new Meld(tiles, false);
     if (meld.isKokushiMusou()) {
-      hands.push(new CompletedHand([meld]));
+      hands.push(new Hand([meld]));
     }
     return hands;
   }
