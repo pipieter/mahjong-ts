@@ -12,6 +12,7 @@ import { Honiisou } from "../src/yaku/honiisou";
 import { DoubleRiichi } from "../src/yaku/doubleriichi";
 import { Ippatsu } from "../src/yaku/ippatsu";
 import { Ryanpeikou } from "../src/yaku/ryanpeikou";
+import { Chiitoitsu } from "../src/yaku/chiitoitsu";
 
 describe("yaku tanyao", () => {
   test("non-terminals and non-honors result in tanyao", () => {
@@ -333,5 +334,38 @@ describe("yaku ryanpeikou", () => {
     const config = mockConfig();
 
     expect(ryanpeikou.check(hand, config)).toEqual(0);
+  });
+});
+
+describe("yaku chiitoitsu", () => {
+  test("seven unique pairs results in yaku", () => {
+    const pair1 = [Tiles.Sou1, Tiles.Sou1];
+    const pair2 = [Tiles.Sou2, Tiles.Sou2];
+    const pair3 = [Tiles.Man4, Tiles.Man4];
+    const pair4 = [Tiles.Pin6, Tiles.Pin6];
+    const pair5 = [Tiles.Nan, Tiles.Nan];
+    const pair6 = [Tiles.Ton, Tiles.Ton];
+    const pair7 = [Tiles.Pei, Tiles.Pei];
+    const hand = verifyUnique([...pair1, ...pair2, ...pair3, ...pair4, ...pair5, ...pair6, ...pair7]);
+
+    const chiitoitsu = new Chiitoitsu();
+    const config = mockConfig();
+
+    expect(chiitoitsu.check(hand, config)).toEqual(2);
+  });
+
+  test("seven non-unique pairs does not result in yaku", () => {
+    const pair1 = [Tiles.Sou1, Tiles.Sou1];
+    const pair2 = [Tiles.Sou2, Tiles.Sou2];
+    const pair3 = [Tiles.Man4, Tiles.Man4];
+    const pair4 = [Tiles.Pin6, Tiles.Pin6];
+    const pair5 = [Tiles.Nan, Tiles.Nan];
+    const pair6 = [Tiles.Ton, Tiles.Ton];
+    const hand = verifyUnique([...pair1, ...pair2, ...pair3, ...pair4, ...pair5, ...pair6, ...pair6]);
+
+    const chiitoitsu = new Chiitoitsu();
+    const config = mockConfig();
+
+    expect(chiitoitsu.check(hand, config)).toEqual(0);
   });
 });

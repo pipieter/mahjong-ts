@@ -1,4 +1,5 @@
 import { Hand } from "./hand";
+import { Chiitoitsu } from "./yaku/chiitoitsu";
 import { DoubleRiichi } from "./yaku/doubleriichi";
 import { Haitei } from "./yaku/haitei";
 import { Honiisou } from "./yaku/honiisou";
@@ -29,6 +30,7 @@ export class Scorer {
       new Honiisou(),
       new Ippatsu(),
       new Ryanpeikou(),
+      new Chiitoitsu(),
     ];
   }
 

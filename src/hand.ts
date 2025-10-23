@@ -170,7 +170,7 @@ export class Hand {
         return [];
       }
       tiles = removeFromArray(tiles, pair);
-      pairs.push(new Meld(pair, true));
+      pairs.push(new Meld(pair, false));
     }
 
     return [new Hand(pairs)];
