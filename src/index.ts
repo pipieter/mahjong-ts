@@ -9,5 +9,4 @@ export * from "./yaku/riichi";
 export * from "./yaku/tsumo";
 export * from "./yaku/houtei";
 export * from "./yaku/haitei";
-export * from "./yaku/doubleriichi";
 export * from "./yaku/honiisou";

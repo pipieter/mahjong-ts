@@ -2,7 +2,7 @@ import { Hand } from "./hand";
 import { Tile } from "./tile";
 import { DoubleRiichi } from "./yaku/doubleriichi";
 import { Haitei } from "./yaku/haitei";
-import { ClosedHoniisou, OpenHoniisou } from "./yaku/honiisou";
+import { Honiisou } from "./yaku/honiisou";
 import { Houtei } from "./yaku/houtei";
 import { Riichi } from "./yaku/riichi";
 import { Tanyao } from "./yaku/tanyao";
@@ -46,8 +46,7 @@ export class Scorer {
       new Haitei(),
       new Houtei(),
       new DoubleRiichi(),
-      new OpenHoniisou(),
-      new ClosedHoniisou(),
+      new Honiisou(),
     ];
   }
 
@@ -58,9 +57,10 @@ export class Scorer {
     };
 
     for (const yaku of this.yakus) {
-      if (yaku.check(hand, this.config)) {
+      const han = yaku.check(hand, this.config);
+      if (han > 0) {
         score.yakus.push(yaku.id);
-        score.han += yaku.han;
+        score.han += han;
       }
     }
 

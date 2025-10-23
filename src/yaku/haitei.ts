@@ -6,10 +6,9 @@ export class Haitei extends Yaku {
   public readonly romaji = "Haitei raoyue";
   public readonly english = "Under the Sea";
   public readonly japanese = "海底撈月";
-  public readonly han = 1;
   public readonly yakuman = false;
 
-  public check(_: Hand, config: YakuConfig): boolean {
-    return config.wallCount === 0 && config.tsumo;
+  public check(_: Hand, config: YakuConfig): number {
+    return config.wallCount === 0 && config.tsumo ? 1 : 0;
   }
 }

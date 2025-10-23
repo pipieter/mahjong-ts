@@ -6,10 +6,9 @@ export class Tsumo extends Yaku {
   public readonly romaji = "Tsumo";
   public readonly english = "Tsumo";
   public readonly japanese = "ツモ";
-  public readonly han = 1;
   public readonly yakuman = false;
 
-  public check(hand: Hand, config: YakuConfig): boolean {
-    return hand.isClosed() && config.tsumo;
+  public check(hand: Hand, config: YakuConfig): number {
+    return hand.isClosed() && config.tsumo ? 1 : 0;
   }
 }
