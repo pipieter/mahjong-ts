@@ -37,6 +37,7 @@ export enum YakuId {
   Houtei = 6,
   Tanyao = 8,
   DoubleRiichi = 21,
+  Ryanpeikou = 32,
   Honiisou = 34,
 }
 

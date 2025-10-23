@@ -5,6 +5,7 @@ import { Honiisou } from "./yaku/honiisou";
 import { Houtei } from "./yaku/houtei";
 import { Ippatsu } from "./yaku/ippatsu";
 import { Riichi } from "./yaku/riichi";
+import { Ryanpeikou } from "./yaku/ryanpeikou";
 import { Tanyao } from "./yaku/tanyao";
 import { Tsumo } from "./yaku/tsumo";
 import { Yaku, YakuConfig, YakuId } from "./yaku/yaku";
@@ -27,6 +28,7 @@ export class Scorer {
       new DoubleRiichi(),
       new Honiisou(),
       new Ippatsu(),
+      new Ryanpeikou(),
     ];
   }
 
