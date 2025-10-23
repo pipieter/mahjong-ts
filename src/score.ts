@@ -25,8 +25,8 @@ export interface ScoreConfig {
 }
 
 export class Scorer {
-  public readonly config: ScoreConfig;
-  public readonly yakus: Yaku[];
+  private readonly config: ScoreConfig;
+  private readonly yakus: Yaku[];
 
   constructor(config: Partial<ScoreConfig>) {
     this.config = {
@@ -65,5 +65,14 @@ export class Scorer {
     }
 
     return score;
+  }
+
+  public yaku(id: YakuId): Yaku | undefined {
+    for (const yaku of this.yakus) {
+      if (yaku.id === id) {
+        return yaku;
+      }
+    }
+    return undefined;
   }
 }
