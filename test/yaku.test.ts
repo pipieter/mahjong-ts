@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@jest/globals";
 import { Tiles } from "../src/tile";
-import { Meld } from "../src/hand";
+import { Hand, Meld } from "../src/hand";
 import { Tanyao } from "../src/yaku/tanyao";
 import { Tsumo } from "../src/yaku/tsumo";
 import { Riichi } from "../src/yaku/riichi";
@@ -11,6 +11,7 @@ import { RiichiCall } from "../src/yaku/yaku";
 import { Honiisou } from "../src/yaku/honiisou";
 import { DoubleRiichi } from "../src/yaku/doubleriichi";
 import { Ippatsu } from "../src/yaku/ippatsu";
+import { Ryanpeikou } from "../src/yaku/ryanpeikou";
 
 describe("yaku tanyao", () => {
   test("non-terminals and non-honors result in tanyao", () => {
@@ -305,5 +306,32 @@ describe("yaku honiisou", () => {
     const config = mockConfig();
 
     expect(honiisou.check(hand, config)).toEqual(0);
+  });
+});
+
+describe("yaku ryanpeikou", () => {
+  test("two sets of identical sequences results in ryanpeikou", () => {
+    const chii1 = new Meld([Tiles.Sou1, Tiles.Sou2, Tiles.Sou3], false);
+    const chii2 = new Meld([Tiles.Man3, Tiles.Man4, Tiles.Man5], false);
+    const pair = new Meld([Tiles.Nan, Tiles.Nan], false);
+    const hand = new Hand([chii1, chii1, chii2, chii2, pair]);
+
+    const ryanpeikou = new Ryanpeikou();
+    const config = mockConfig();
+
+    expect(ryanpeikou.check(hand, config)).toEqual(3);
+  });
+
+  test("ryanpeikou must be closed", () => {
+    const chii1 = new Meld([Tiles.Sou1, Tiles.Sou2, Tiles.Sou3], false);
+    const chii2 = new Meld([Tiles.Man3, Tiles.Man4, Tiles.Man5], false);
+    const chii3 = new Meld([Tiles.Man3, Tiles.Man4, Tiles.Man5], true);
+    const pair = new Meld([Tiles.Nan, Tiles.Nan], false);
+    const hand = new Hand([chii1, chii1, chii2, chii3, pair]);
+
+    const ryanpeikou = new Ryanpeikou();
+    const config = mockConfig();
+
+    expect(ryanpeikou.check(hand, config)).toEqual(0);
   });
 });
