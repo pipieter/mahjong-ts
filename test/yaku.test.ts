@@ -13,6 +13,7 @@ import { DoubleRiichi } from "../src/yaku/doubleriichi";
 import { Ippatsu } from "../src/yaku/ippatsu";
 import { Ryanpeikou } from "../src/yaku/ryanpeikou";
 import { Chiitoitsu } from "../src/yaku/chiitoitsu";
+import { Iipeikou } from "../src/yaku/iipeikou";
 
 describe("yaku tanyao", () => {
   test("non-terminals and non-honors result in tanyao", () => {
@@ -334,6 +335,40 @@ describe("yaku ryanpeikou", () => {
     const config = mockConfig();
 
     expect(ryanpeikou.check(hand, config)).toEqual(0);
+  });
+});
+
+describe("yaku iipeikou", () => {
+  test("one set of identical sequences results in iipeikou", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou1, Tiles.Sou2, Tiles.Sou3, Tiles.Sou1, Tiles.Sou2, Tiles.Sou3, Tiles.Man5, Tiles.Man5, Tiles.Man5, Tiles.Nan, Tiles.Nan, Tiles.Nan, Tiles.Pei, Tiles.Pei]);
+    const iipeikou = new Iipeikou();
+    const config = mockConfig();
+
+    expect(iipeikou.check(hand, config)).toEqual(1);
+  });
+
+  test("iipeikou must be closed", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou1, Tiles.Sou2, Tiles.Sou3, Tiles.Man5, Tiles.Man5, Tiles.Man5, Tiles.Nan, Tiles.Nan, Tiles.Nan, Tiles.Pei, Tiles.Pei], [new Meld([Tiles.Sou1, Tiles.Sou2, Tiles.Sou3], true)]);
+    const iipeikou = new Iipeikou();
+    const config = mockConfig();
+
+    expect(iipeikou.check(hand, config)).toEqual(0);
+  });
+
+  test("iipeikou and ryanpeikou are incompatible", () => {
+    const chii1 = new Meld([Tiles.Sou1, Tiles.Sou2, Tiles.Sou3], false);
+    const chii2 = new Meld([Tiles.Man4, Tiles.Man5, Tiles.Man6], false);
+    const pair = new Meld([Tiles.Nan, Tiles.Nan], false);
+    const hand = new Hand([chii1, chii1, chii2, chii2, pair]);
+
+    const ryanpeikou = new Ryanpeikou();
+    const iipeikou = new Iipeikou();
+    const config = mockConfig();
+
+    expect(ryanpeikou.check(hand, config)).toEqual(3);
+    expect(iipeikou.check(hand, config)).toEqual(0);
   });
 });
 

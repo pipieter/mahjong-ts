@@ -36,6 +36,7 @@ export enum YakuId {
   Haitei = 5,
   Houtei = 6,
   Tanyao = 8,
+  Iipeikou = 9,
   DoubleRiichi = 21,
   Chiitoitsu = 22,
   Ryanpeikou = 32,

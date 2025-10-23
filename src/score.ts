@@ -4,6 +4,7 @@ import { DoubleRiichi } from "./yaku/doubleriichi";
 import { Haitei } from "./yaku/haitei";
 import { Honiisou } from "./yaku/honiisou";
 import { Houtei } from "./yaku/houtei";
+import { Iipeikou } from "./yaku/iipeikou";
 import { Ippatsu } from "./yaku/ippatsu";
 import { Riichi } from "./yaku/riichi";
 import { Ryanpeikou } from "./yaku/ryanpeikou";
@@ -31,6 +32,7 @@ export class Scorer {
       new Ippatsu(),
       new Ryanpeikou(),
       new Chiitoitsu(),
+      new Iipeikou(),
     ];
   }
 

@@ -13,3 +13,4 @@ export * from "./yaku/honiisou";
 export * from "./yaku/ippatsu";
 export * from "./yaku/ryanpeikou";
 export * from "./yaku/chiitoitsu";
+export * from "./yaku/iipeikou";
