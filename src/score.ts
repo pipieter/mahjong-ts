@@ -3,6 +3,7 @@ import { DoubleRiichi } from "./yaku/doubleriichi";
 import { Haitei } from "./yaku/haitei";
 import { Honiisou } from "./yaku/honiisou";
 import { Houtei } from "./yaku/houtei";
+import { Ippatsu } from "./yaku/ippatsu";
 import { Riichi } from "./yaku/riichi";
 import { Tanyao } from "./yaku/tanyao";
 import { Tsumo } from "./yaku/tsumo";
@@ -25,6 +26,7 @@ export class Scorer {
       new Houtei(),
       new DoubleRiichi(),
       new Honiisou(),
+      new Ippatsu(),
     ];
   }
 

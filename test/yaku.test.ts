@@ -10,6 +10,7 @@ import { mockConfig, verifyUnique } from "./mock";
 import { RiichiCall } from "../src/yaku/yaku";
 import { Honiisou } from "../src/yaku/honiisou";
 import { DoubleRiichi } from "../src/yaku/doubleriichi";
+import { Ippatsu } from "../src/yaku/ippatsu";
 
 describe("yaku tanyao", () => {
   test("non-terminals and non-honors result in tanyao", () => {
@@ -108,6 +109,49 @@ describe("yaku tsumo", () => {
     config.tsumo = true;
 
     expect(tsumo.check(hand, config)).toEqual(0);
+  });
+});
+
+describe("yaku ippatsu", () => {
+  test("riichi ippatsu results yaku", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou2, Tiles.Sou3, Tiles.Sou4, Tiles.Man4, Tiles.Man4, Tiles.Man4, Tiles.Pin5, Tiles.Pin6, Tiles.Pin7, Tiles.Pin8, Tiles.Pin8, Tiles.Pin8, Tiles.Sou7, Tiles.Sou7];
+
+    const hand = verifyUnique(tiles);
+    const ippatsu = new Ippatsu();
+    const config = mockConfig();
+    config.riichi = RiichiCall.Riichi;
+    config.ippatsu = true;
+
+    expect(ippatsu.check(hand, config)).toEqual(1);
+  });
+
+  test("non-riichi ippatsu does not result in yaku", () => {
+    // This state should not occur, because ippatsu should only be set to true after a riichi call.
+
+    // prettier-ignore
+    const tiles = [Tiles.Sou2, Tiles.Sou3, Tiles.Sou4, Tiles.Man4, Tiles.Man4, Tiles.Man4, Tiles.Pin5, Tiles.Pin6, Tiles.Pin7, Tiles.Pin8, Tiles.Pin8, Tiles.Pin8, Tiles.Sou7, Tiles.Sou7];
+
+    const hand = verifyUnique(tiles);
+    const ippatsu = new Ippatsu();
+    const config = mockConfig();
+    config.riichi = RiichiCall.None;
+    config.ippatsu = true;
+
+    expect(ippatsu.check(hand, config)).toEqual(0);
+  });
+
+  test("riichi non-ippatsu does not result in yaku", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou2, Tiles.Sou3, Tiles.Sou4, Tiles.Man4, Tiles.Man4, Tiles.Man4, Tiles.Pin5, Tiles.Pin6, Tiles.Pin7, Tiles.Pin8, Tiles.Pin8, Tiles.Pin8, Tiles.Sou7, Tiles.Sou7];
+
+    const hand = verifyUnique(tiles);
+    const ippatsu = new Ippatsu();
+    const config = mockConfig();
+    config.riichi = RiichiCall.Riichi;
+    config.ippatsu = false;
+
+    expect(ippatsu.check(hand, config)).toEqual(0);
   });
 });
 
