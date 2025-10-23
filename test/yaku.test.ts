@@ -368,4 +368,54 @@ describe("yaku chiitoitsu", () => {
 
     expect(chiitoitsu.check(hand, config)).toEqual(0);
   });
+
+  test("chiitoitsu should be closed", () => {
+    // This situation should not be possible, as a pair cannot be open in any way. Still, the rules indicate that
+    // chiitoitsu must be a closed hand.
+    const pair1 = new Meld([Tiles.Sou1, Tiles.Sou1], true);
+    const pair2 = new Meld([Tiles.Sou2, Tiles.Sou2], false);
+    const pair3 = new Meld([Tiles.Man4, Tiles.Man4], false);
+    const pair4 = new Meld([Tiles.Pin6, Tiles.Pin6], false);
+    const pair5 = new Meld([Tiles.Nan, Tiles.Nan], false);
+    const pair6 = new Meld([Tiles.Ton, Tiles.Ton], false);
+    const pair7 = new Meld([Tiles.Pei, Tiles.Pei], false);
+    const hand = new Hand([pair1, pair2, pair3, pair4, pair5, pair6, pair7]);
+
+    const chiitoitsu = new Chiitoitsu();
+    const config = mockConfig();
+
+    expect(chiitoitsu.check(hand, config)).toEqual(0);
+  });
+
+  test("chiitoitsu must have seven pairs, fewer", () => {
+    const pair1 = [Tiles.Sou1, Tiles.Sou1];
+    const pair2 = [Tiles.Sou2, Tiles.Sou2];
+    const pair3 = [Tiles.Man4, Tiles.Man4];
+    const pair4 = [Tiles.Pin6, Tiles.Pin6];
+    const pair5 = [Tiles.Nan, Tiles.Nan];
+    const pair6 = [Tiles.Ton, Tiles.Ton];
+    const hand = verifyUnique([...pair1, ...pair2, ...pair3, ...pair4, ...pair5, ...pair6]);
+
+    const chiitoitsu = new Chiitoitsu();
+    const config = mockConfig();
+
+    expect(chiitoitsu.check(hand, config)).toEqual(0);
+  });
+
+  test("chiitoitsu must have seven pairs, more", () => {
+    const pair1 = [Tiles.Sou1, Tiles.Sou1];
+    const pair2 = [Tiles.Sou2, Tiles.Sou2];
+    const pair3 = [Tiles.Man4, Tiles.Man4];
+    const pair4 = [Tiles.Pin6, Tiles.Pin6];
+    const pair5 = [Tiles.Nan, Tiles.Nan];
+    const pair6 = [Tiles.Ton, Tiles.Ton];
+    const pair7 = [Tiles.Pin1, Tiles.Pin1];
+    const pair8 = [Tiles.Pin2, Tiles.Pin2];
+    const hand = verifyUnique([...pair1, ...pair2, ...pair3, ...pair4, ...pair5, ...pair6, ...pair7, ...pair8]);
+
+    const chiitoitsu = new Chiitoitsu();
+    const config = mockConfig();
+
+    expect(chiitoitsu.check(hand, config)).toEqual(0);
+  });
 });
