@@ -13,8 +13,8 @@ describe("basic scoring", () => {
     config.tsumo = true;
     config.riichi = RiichiCall.None;
 
-    const scorer = new Scorer(config);
-    const score = scorer.score(hand);
+    const scorer = new Scorer();
+    const score = scorer.score(hand, config);
 
     expect(score.han).toEqual(2);
     expect(score.yakus.includes(YakuId.Tanyao));
