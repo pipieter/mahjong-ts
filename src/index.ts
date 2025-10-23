@@ -10,3 +10,4 @@ export * from "./yaku/tsumo";
 export * from "./yaku/houtei";
 export * from "./yaku/haitei";
 export * from "./yaku/honiisou";
+export * from "./yaku/ippatsu";

@@ -1,18 +1,18 @@
 import { expect } from "@jest/globals";
 import { Hand, Meld } from "../src/hand";
-import { ScoreConfig } from "../src/score";
 import { Tile } from "../src/tile";
-import { RiichiCall } from "../src/yaku/yaku";
+import { RiichiCall, YakuConfig } from "../src/yaku/yaku";
 
-export function mockConfig(): ScoreConfig {
+export function mockConfig(): YakuConfig {
   return {
     riichi: RiichiCall.None,
     tsumo: false,
+    ippatsu: false,
+    wallCount: 10,
     dealer: false,
     dora: [],
     uradora: [],
     akadora: 0,
-    wallCount: 10,
   };
 }
 

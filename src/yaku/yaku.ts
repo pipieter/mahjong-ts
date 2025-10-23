@@ -1,4 +1,5 @@
 import { Hand } from "../hand";
+import { Tile } from "../tile";
 
 export enum RiichiCall {
   None,
@@ -11,8 +12,18 @@ export interface YakuConfig {
   riichi: RiichiCall;
   /** Did the hand win by tsumo. If false, it is assumed the hand was won by ron. */
   tsumo: boolean;
+  /** Did the winner win with an ippatsu? */
+  ippatsu: boolean;
   /** Number of tiles that remained in the walls at the time of win. */
   wallCount: number;
+  /** Was the winner the dealer? */
+  dealer: boolean;
+  /** The dora indicators. */
+  dora: Tile[];
+  /** The uradora indicators. */
+  uradora: Tile[];
+  /** The number of akadora in the hand. */
+  akadora: number;
 }
 
 /**
@@ -21,6 +32,7 @@ export interface YakuConfig {
 export enum YakuId {
   Tsumo = 0,
   Riichi = 1,
+  Ippatsu = 2,
   Haitei = 5,
   Houtei = 6,
   Tanyao = 8,
