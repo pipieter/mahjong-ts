@@ -15,14 +15,17 @@ export interface YakuConfig {
   wallCount: number;
 }
 
+/**
+ * Ids to reference the yaku. These equal the Tenhou ids, as denoted by their log format.
+ */
 export enum YakuId {
-  Tanyao = "tanyao",
-  Riichi = "riichi",
-  DoubleRiichi = "double riichi",
-  Tsumo = "tsumo",
-  Haitei = "haitei",
-  Houtei = "houtei",
-  Honiisou = "honiisou",
+  Tsumo = 0,
+  Riichi = 1,
+  Haitei = 5,
+  Houtei = 6,
+  Tanyao = 8,
+  DoubleRiichi = 21,
+  Honiisou = 34,
 }
 
 export abstract class Yaku {
