@@ -10,6 +10,7 @@ import { Riichi } from "./yaku/riichi";
 import { Ryanpeikou } from "./yaku/ryanpeikou";
 import { Ryuuiisou } from "./yaku/ryuuiisou";
 import { Tanyao } from "./yaku/tanyao";
+import { Chiihou, Tenhou } from "./yaku/tenhou";
 import { Tsumo } from "./yaku/tsumo";
 import { Yaku, YakuConfig, YakuId } from "./yaku/yaku";
 
@@ -36,6 +37,8 @@ export class Scorer {
       new Iipeikou(),
       new Chiitoitsu(),
       new Ryuuiisou(),
+      new Tenhou(),
+      new Chiihou(),
     ];
   }
 

@@ -7,6 +7,13 @@ export enum RiichiCall {
   Double,
 }
 
+export enum Wind {
+  East,
+  South,
+  West,
+  North,
+}
+
 export interface YakuConfig {
   /** Was the hand in riichi. */
   riichi: RiichiCall;
@@ -24,6 +31,12 @@ export interface YakuConfig {
   uradora: Tile[];
   /** The number of akadora in the hand. */
   akadora: number;
+  /** The seat wind of the winner. For dealers, this is always the east wind. */
+  seat: Wind;
+  /** The wind of of the current round. */
+  round: Wind;
+  /** The current turn. Turns start counting from 1, and a turn begins when the east wind draws again. This is sometimes referred to as draw (e.g. the first draw). */
+  turn: number;
 }
 
 /**
@@ -42,6 +55,10 @@ export enum YakuId {
   Ittsuu = 24,
   Ryanpeikou = 32,
   Honiisou = 34,
+  // Yakuman
+  Renhou = 36, // Not supported
+  Tenhou = 37,
+  Chiihou = 38,
   Ryuuiisou = 43,
 }
 

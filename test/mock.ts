@@ -1,7 +1,7 @@
 import { expect } from "@jest/globals";
 import { Hand, Meld } from "../src/hand";
 import { Tile } from "../src/tile";
-import { RiichiCall, YakuConfig } from "../src/yaku/yaku";
+import { RiichiCall, Wind, YakuConfig } from "../src/yaku/yaku";
 
 export function mockConfig(): YakuConfig {
   return {
@@ -13,6 +13,9 @@ export function mockConfig(): YakuConfig {
     dora: [],
     uradora: [],
     akadora: 0,
+    seat: Wind.East,
+    round: Wind.East,
+    turn: 10,
   };
 }
 
