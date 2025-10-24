@@ -33,6 +33,7 @@ export class Scorer {
       new Ryanpeikou(),
       new Chiitoitsu(),
       new Iipeikou(),
+      new Chiitoitsu(),
     ];
   }
 

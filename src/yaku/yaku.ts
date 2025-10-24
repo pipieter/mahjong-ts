@@ -39,6 +39,7 @@ export enum YakuId {
   Iipeikou = 9,
   DoubleRiichi = 21,
   Chiitoitsu = 22,
+  Ittsuu = 24,
   Ryanpeikou = 32,
   Honiisou = 34,
 }

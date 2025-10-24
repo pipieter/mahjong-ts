@@ -1,4 +1,4 @@
-import { describe, expect, test } from "@jest/globals";
+import { describe, expect, it, test } from "@jest/globals";
 import { Tiles } from "../src/tile";
 import { Hand, Meld } from "../src/hand";
 import { Tanyao } from "../src/yaku/tanyao";
@@ -14,6 +14,7 @@ import { Ippatsu } from "../src/yaku/ippatsu";
 import { Ryanpeikou } from "../src/yaku/ryanpeikou";
 import { Chiitoitsu } from "../src/yaku/chiitoitsu";
 import { Iipeikou } from "../src/yaku/iipeikou";
+import { Ittsuu } from "../src/yaku/ittsuu";
 
 describe("yaku tanyao", () => {
   test("non-terminals and non-honors result in tanyao", () => {
@@ -452,5 +453,38 @@ describe("yaku chiitoitsu", () => {
     const config = mockConfig();
 
     expect(chiitoitsu.check(hand, config)).toEqual(0);
+  });
+});
+
+describe("yaku ittsuu", () => {
+  test("one-suit straight results in yaku", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou1, Tiles.Sou2, Tiles.Sou3, Tiles.Sou4, Tiles.Sou5, Tiles.Sou6, Tiles.Sou7, Tiles.Sou8, Tiles.Sou9, Tiles.Chun, Tiles.Chun, Tiles.Chun, Tiles.Nan, Tiles.Nan]);
+
+    const ittsuu = new Ittsuu();
+    const config = mockConfig();
+
+    expect(ittsuu.check(hand, config)).toEqual(2);
+  });
+
+  test("open scores one less han", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou4, Tiles.Sou5, Tiles.Sou6, Tiles.Sou7, Tiles.Sou8, Tiles.Sou9, Tiles.Chun, Tiles.Chun, Tiles.Chun, Tiles.Nan, Tiles.Nan], [new Meld([Tiles.Sou1, Tiles.Sou2, Tiles.Sou3], true)]);
+
+    const ittsuu = new Ittsuu();
+    const config = mockConfig();
+
+    expect(ittsuu.check(hand, config)).toEqual(1);
+  });
+
+  test("hand must have 123, 456, and 789 formations, not just tiles", () => {
+    // The hand below contains a 123 chii, 567 chii, 789 chii, and a 44 pair. This should not qualify as an ittsuu.
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou1, Tiles.Sou2, Tiles.Sou3, Tiles.Sou5, Tiles.Sou6, Tiles.Sou7, Tiles.Sou7, Tiles.Sou8, Tiles.Sou9, Tiles.Chun, Tiles.Chun, Tiles.Chun, Tiles.Sou4, Tiles.Sou4]);
+
+    const ittsuu = new Ittsuu();
+    const config = mockConfig();
+
+    expect(ittsuu.check(hand, config)).toEqual(0);
   });
 });
