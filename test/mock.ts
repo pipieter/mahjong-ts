@@ -16,6 +16,7 @@ export function mockConfig(): YakuConfig {
     seat: Wind.East,
     round: Wind.East,
     turn: 10,
+    chankan: false,
   };
 }
 

@@ -37,6 +37,8 @@ export interface YakuConfig {
   round: Wind;
   /** The current turn. Turns start counting from 1, and a turn begins when the east wind draws again. This is sometimes referred to as draw (e.g. the first draw). */
   turn: number;
+  /** Did the hand win by chankan? */
+  chankan: boolean;
 }
 
 /**
@@ -46,6 +48,7 @@ export enum YakuId {
   Tsumo = 0,
   Riichi = 1,
   Ippatsu = 2,
+  Chankan = 3,
   Haitei = 5,
   Houtei = 6,
   Tanyao = 8,
