@@ -8,6 +8,7 @@ import { Houtei } from "./yaku/houtei";
 import { Iipeikou } from "./yaku/iipeikou";
 import { Ippatsu } from "./yaku/ippatsu";
 import { Riichi } from "./yaku/riichi";
+import { Rinshan } from "./yaku/rinshan";
 import { Ryanpeikou } from "./yaku/ryanpeikou";
 import { Ryuuiisou } from "./yaku/ryuuiisou";
 import { Tanyao } from "./yaku/tanyao";
@@ -41,6 +42,7 @@ export class Scorer {
       new Tenhou(),
       new Chiihou(),
       new Chankan(),
+      new Rinshan(),
     ];
   }
 
