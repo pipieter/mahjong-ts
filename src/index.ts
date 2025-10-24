@@ -19,3 +19,4 @@ export * from "./yaku/ryuuiisou";
 export * from "./yaku/tenhou";
 export * from "./yaku/chankan";
 export * from "./yaku/rinshan";
+export * from "./yaku/yakuhai";

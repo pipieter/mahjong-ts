@@ -8,10 +8,14 @@ export enum RiichiCall {
 }
 
 export enum Wind {
-  East,
-  South,
-  West,
-  North,
+  /** East wind */
+  Ton,
+  /** South wind */
+  Nan,
+  /** West wind */
+  Shaa,
+  /** North wind */
+  Pei,
 }
 
 export interface YakuConfig {
@@ -56,6 +60,17 @@ export enum YakuId {
   Houtei = 6,
   Tanyao = 8,
   Iipeikou = 9,
+  EastSeat = 10,
+  SouthSeat = 11,
+  WestSeat = 12,
+  NorthSeat = 13,
+  EastRound = 14,
+  SouthRound = 15,
+  WestRound = 16,
+  NorthRound = 17,
+  HakuYakuhai = 18,
+  HatsuYakuhai = 19,
+  ChunYakuhai = 20,
   DoubleRiichi = 21,
   Chiitoitsu = 22,
   Ittsuu = 24,
