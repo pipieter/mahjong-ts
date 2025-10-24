@@ -16,6 +16,7 @@ import { Chiitoitsu } from "../src/yaku/chiitoitsu";
 import { Iipeikou } from "../src/yaku/iipeikou";
 import { Ittsuu } from "../src/yaku/ittsuu";
 import { Chankan } from "../src/yaku/chankan";
+import { Rinshan } from "../src/yaku/rinshan";
 
 describe("yaku tanyao", () => {
   test("non-terminals and non-honors result in tanyao", () => {
@@ -500,5 +501,40 @@ describe("yaku chankan", () => {
     config.chankan = true;
 
     expect(chankan.check(hand, config)).toEqual(1);
+  });
+
+  test("non-chankan does not result in yaku", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou1, Tiles.Sou2, Tiles.Sou3, Tiles.Sou4, Tiles.Sou5, Tiles.Sou6, Tiles.Sou7, Tiles.Sou8, Tiles.Sou9, Tiles.Chun, Tiles.Chun, Tiles.Chun, Tiles.Nan, Tiles.Nan]);
+
+    const chankan = new Chankan();
+    const config = mockConfig();
+    config.chankan = false;
+
+    expect(chankan.check(hand, config)).toEqual(0);
+  });
+});
+
+describe("yaku rinshan kaihou", () => {
+  test("rinshan results in yaku", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou1, Tiles.Sou2, Tiles.Sou3, Tiles.Sou4, Tiles.Sou5, Tiles.Sou6, Tiles.Sou7, Tiles.Sou8, Tiles.Sou9, Tiles.Chun, Tiles.Chun, Tiles.Chun, Tiles.Nan, Tiles.Nan]);
+
+    const rinshan = new Rinshan();
+    const config = mockConfig();
+    config.rinshan = true;
+
+    expect(rinshan.check(hand, config)).toEqual(1);
+  });
+
+  test("non-rinshan does not result in yaku", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou1, Tiles.Sou2, Tiles.Sou3, Tiles.Sou4, Tiles.Sou5, Tiles.Sou6, Tiles.Sou7, Tiles.Sou8, Tiles.Sou9, Tiles.Chun, Tiles.Chun, Tiles.Chun, Tiles.Nan, Tiles.Nan]);
+
+    const rinshan = new Rinshan();
+    const config = mockConfig();
+    config.rinshan = false;
+
+    expect(rinshan.check(hand, config)).toEqual(0);
   });
 });

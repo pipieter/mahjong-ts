@@ -39,6 +39,8 @@ export interface YakuConfig {
   turn: number;
   /** Did the hand win by chankan? */
   chankan: boolean;
+  /** Did the hand win by rinshan kaihou? */
+  rinshan: boolean;
 }
 
 /**
@@ -49,6 +51,7 @@ export enum YakuId {
   Riichi = 1,
   Ippatsu = 2,
   Chankan = 3,
+  Rinshan = 4,
   Haitei = 5,
   Houtei = 6,
   Tanyao = 8,
