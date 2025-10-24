@@ -15,6 +15,7 @@ import { Ryanpeikou } from "../src/yaku/ryanpeikou";
 import { Chiitoitsu } from "../src/yaku/chiitoitsu";
 import { Iipeikou } from "../src/yaku/iipeikou";
 import { Ittsuu } from "../src/yaku/ittsuu";
+import { Chankan } from "../src/yaku/chankan";
 
 describe("yaku tanyao", () => {
   test("non-terminals and non-honors result in tanyao", () => {
@@ -486,5 +487,18 @@ describe("yaku ittsuu", () => {
     const config = mockConfig();
 
     expect(ittsuu.check(hand, config)).toEqual(0);
+  });
+});
+
+describe("yaku chankan", () => {
+  test("chankan results in yaku", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou1, Tiles.Sou2, Tiles.Sou3, Tiles.Sou4, Tiles.Sou5, Tiles.Sou6, Tiles.Sou7, Tiles.Sou8, Tiles.Sou9, Tiles.Chun, Tiles.Chun, Tiles.Chun, Tiles.Nan, Tiles.Nan]);
+
+    const chankan = new Chankan();
+    const config = mockConfig();
+    config.chankan = true;
+
+    expect(chankan.check(hand, config)).toEqual(1);
   });
 });

@@ -1,4 +1,5 @@
 import { Hand } from "./hand";
+import { Chankan } from "./yaku/chankan";
 import { Chiitoitsu } from "./yaku/chiitoitsu";
 import { DoubleRiichi } from "./yaku/doubleriichi";
 import { Haitei } from "./yaku/haitei";
@@ -39,6 +40,7 @@ export class Scorer {
       new Ryuuiisou(),
       new Tenhou(),
       new Chiihou(),
+      new Chankan(),
     ];
   }
 
