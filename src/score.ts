@@ -15,6 +15,19 @@ import { Tanyao } from "./yaku/tanyao";
 import { Chiihou, Tenhou } from "./yaku/tenhou";
 import { Tsumo } from "./yaku/tsumo";
 import { Yaku, YakuConfig, YakuId } from "./yaku/yaku";
+import {
+  ChunYakuhai,
+  EastRound,
+  EastSeat,
+  HakuYakuhai,
+  HatsuYakuhai,
+  NorthRound,
+  NorthSeat,
+  SouthRound,
+  SouthSeat,
+  WestRound,
+  WestSeat,
+} from "./yaku/yakuhai";
 
 export interface Score {
   yakus: YakuId[];
@@ -43,6 +56,17 @@ export class Scorer {
       new Chiihou(),
       new Chankan(),
       new Rinshan(),
+      new EastSeat(),
+      new SouthSeat(),
+      new WestSeat(),
+      new NorthSeat(),
+      new EastRound(),
+      new SouthRound(),
+      new WestRound(),
+      new NorthRound(),
+      new HakuYakuhai(),
+      new HatsuYakuhai(),
+      new ChunYakuhai(),
     ];
   }
 

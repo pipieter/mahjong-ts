@@ -9,7 +9,7 @@ export class Tenhou extends Yaku {
   public readonly yakuman = true;
 
   public check(_: Hand, config: YakuConfig): number {
-    return config.tsumo && config.turn === 1 && config.seat === Wind.East ? 13 : 0;
+    return config.tsumo && config.turn === 1 && config.seat === Wind.Ton ? 13 : 0;
   }
 }
 
@@ -21,6 +21,6 @@ export class Chiihou extends Yaku {
   public readonly yakuman = true;
 
   public check(_: Hand, config: YakuConfig): number {
-    return config.tsumo && config.turn === 1 && config.seat !== Wind.East ? 13 : 0;
+    return config.tsumo && config.turn === 1 && config.seat !== Wind.Ton ? 13 : 0;
   }
 }

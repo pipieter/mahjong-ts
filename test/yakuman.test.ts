@@ -25,7 +25,7 @@ describe("yakuman tenhou and chiihou", () => {
     const tenhou = new Tenhou();
     const config = mockConfig();
     config.tsumo = true;
-    config.seat = Wind.East;
+    config.seat = Wind.Ton;
     config.turn = 1;
 
     expect(tenhou.check(hand, config)).toEqual(13);
@@ -38,7 +38,7 @@ describe("yakuman tenhou and chiihou", () => {
     const chiihou = new Chiihou();
     const config = mockConfig();
     config.tsumo = true;
-    config.seat = Wind.South;
+    config.seat = Wind.Nan;
     config.turn = 1;
 
     expect(chiihou.check(hand, config)).toEqual(13);
