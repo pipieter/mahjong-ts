@@ -1,4 +1,4 @@
-import { describe, expect, it, test } from "@jest/globals";
+import { describe, expect, test } from "@jest/globals";
 import { Tiles } from "../src/tile";
 import { Hand, Meld } from "../src/hand";
 import { Tanyao } from "../src/yaku/tanyao";

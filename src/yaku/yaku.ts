@@ -42,6 +42,7 @@ export enum YakuId {
   Ittsuu = 24,
   Ryanpeikou = 32,
   Honiisou = 34,
+  Ryuuiisou = 43,
 }
 
 export abstract class Yaku {
@@ -52,7 +53,11 @@ export abstract class Yaku {
   public abstract readonly yakuman: boolean;
 
   /**
-   * Check if a hand and a config match the yaku.
+   * Check if a hand and a config match the yaku. If it does, the number of han is returned. Yakuman will return 13 han.
+   * A yaku worth multiple yakuman will return a multiplied value, e.g. a double yakuman will return 26 han.
+   *
+   * If the hand does not match a yaku, the value zero is returned.
+   *
    * @param hand The hand to check. Must be a complete hand.
    * @param config The config that describes the victory.
    * @return The amount of han associated with the hand. Returns 0 if the hand does not match the yaku.
