@@ -20,3 +20,4 @@ export * from "./yaku/tenhou";
 export * from "./yaku/chankan";
 export * from "./yaku/rinshan";
 export * from "./yaku/yakuhai";
+export * from "./yaku/daisangen";
