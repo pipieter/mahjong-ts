@@ -70,4 +70,14 @@ describe("yakuman ryuuiisou", () => {
 
     expect(daisangen.check(hand, config)).toEqual(13);
   });
+
+  test("three dragons requires all three dragon pairs", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Hatsu, Tiles.Hatsu, Tiles.Hatsu, Tiles.Haku, Tiles.Haku, Tiles.Haku, Tiles.Chun, Tiles.Chun, Tiles.Pin2, Tiles.Pin2, Tiles.Pin2, Tiles.Sou4, Tiles.Sou4, Tiles.Sou4]);
+
+    const daisangen = new Daisangen();
+    const config = mockConfig();
+
+    expect(daisangen.check(hand, config)).toEqual(0);
+  });
 });
