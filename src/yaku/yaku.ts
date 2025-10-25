@@ -80,6 +80,7 @@ export enum YakuId {
   Renhou = 36, // Not supported
   Tenhou = 37,
   Chiihou = 38,
+  Daisangen = 39,
   Ryuuiisou = 43,
 }
 

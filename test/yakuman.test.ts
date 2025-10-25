@@ -1,9 +1,6 @@
 import { describe, expect, test } from "@jest/globals";
 import { mockConfig, verifyUnique } from "./mock";
-import { Tiles } from "../src/tile";
-import { Ryuuiisou } from "../src/yaku/ryuuiisou";
-import { Chiihou, Tenhou } from "../src/yaku/tenhou";
-import { Wind } from "../src/yaku/yaku";
+import { Daisangen, Wind, Chiihou, Tenhou, Tiles, Ryuuiisou } from "../src";
 
 describe("yakuman ryuuiisou", () => {
   test("all greens results in yakuman", () => {
@@ -60,5 +57,17 @@ describe("yakuman tenhou and chiihou", () => {
 
       expect(chiihou.check(hand, config)).not.toEqual(tenhou.check(hand, config));
     }
+  });
+});
+
+describe("yakuman ryuuiisou", () => {
+  test("three dragons results in yakuman", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Hatsu, Tiles.Hatsu, Tiles.Hatsu, Tiles.Haku, Tiles.Haku, Tiles.Haku, Tiles.Chun, Tiles.Chun, Tiles.Chun, Tiles.Pin2, Tiles.Pin2, Tiles.Pin2, Tiles.Sou4, Tiles.Sou4]);
+
+    const daisangen = new Daisangen();
+    const config = mockConfig();
+
+    expect(daisangen.check(hand, config)).toEqual(13);
   });
 });
