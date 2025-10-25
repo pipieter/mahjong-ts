@@ -673,6 +673,16 @@ describe("yaku chiniisou", () => {
     expect(chiniisou.check(hand, config)).toEqual(6);
   });
 
+  test("open chiniisou scores less", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou4, Tiles.Sou4, Tiles.Sou4, Tiles.Sou5, Tiles.Sou5, Tiles.Sou5, Tiles.Sou9, Tiles.Sou9], [new Meld([Tiles.Sou8, Tiles.Sou8, Tiles.Sou8], true)]);
+
+    const chiniisou = new Chiniisou();
+    const config = mockConfig();
+
+    expect(chiniisou.check(hand, config)).toEqual(5);
+  });
+
   test("chiniisou is not honiisou", () => {
     // prettier-ignore
     const hand = verifyUnique([Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou4, Tiles.Sou4, Tiles.Sou4, Tiles.Sou5, Tiles.Sou5, Tiles.Sou5, Tiles.Sou8, Tiles.Sou8, Tiles.Sou8, Tiles.Pei, Tiles.Pei]);
