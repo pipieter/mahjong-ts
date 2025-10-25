@@ -1,6 +1,6 @@
 import { Hand, Meld } from "../hand";
-import { Tile, Tiles } from "../tile";
-import { Wind, Yaku, YakuConfig, YakuId } from "./yaku";
+import { Tile, Tiles, Wind } from "../tile";
+import { Yaku, YakuConfig, YakuId } from "./yaku";
 
 function findTriplet(melds: Meld[], tile: Tile): boolean {
   for (const meld of melds) {

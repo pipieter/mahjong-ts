@@ -1,7 +1,7 @@
 import { expect } from "@jest/globals";
 import { Hand, Meld } from "../src/hand";
-import { Tile } from "../src/tile";
-import { RiichiCall, Wind, YakuConfig } from "../src/yaku/yaku";
+import { Tile, Tiles, Wind } from "../src/tile";
+import { RiichiCall, YakuConfig } from "../src/yaku/yaku";
 
 export function mockConfig(): YakuConfig {
   return {
@@ -18,6 +18,7 @@ export function mockConfig(): YakuConfig {
     turn: 10,
     chankan: false,
     rinshan: false,
+    agari: Tiles.Sou1 // Should be irrelevant, except for the pinfu tests
   };
 }
 

@@ -1,5 +1,6 @@
 import { Hand } from "../hand";
-import { Wind, Yaku, YakuConfig, YakuId } from "./yaku";
+import { Wind } from "../tile";
+import { Yaku, YakuConfig, YakuId } from "./yaku";
 
 export class Tenhou extends Yaku {
   public readonly id = YakuId.Tenhou;

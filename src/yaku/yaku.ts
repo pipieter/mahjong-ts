@@ -1,21 +1,10 @@
 import { Hand } from "../hand";
-import { Tile } from "../tile";
+import { Tile, Wind } from "../tile";
 
 export enum RiichiCall {
   None,
   Riichi,
   Double,
-}
-
-export enum Wind {
-  /** East wind */
-  Ton,
-  /** South wind */
-  Nan,
-  /** West wind */
-  Shaa,
-  /** North wind */
-  Pei,
 }
 
 export interface YakuConfig {
@@ -45,6 +34,8 @@ export interface YakuConfig {
   chankan: boolean;
   /** Did the hand win by rinshan kaihou? */
   rinshan: boolean;
+  /** The drawn tile that won the hand. */
+  agari: Tile;
 }
 
 /**
@@ -58,6 +49,7 @@ export enum YakuId {
   Rinshan = 4,
   Haitei = 5,
   Houtei = 6,
+  Pinfu = 7,
   Tanyao = 8,
   Iipeikou = 9,
   EastSeat = 10,
