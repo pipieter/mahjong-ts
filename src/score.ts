@@ -12,6 +12,7 @@ import { Riichi } from "./yaku/riichi";
 import { Rinshan } from "./yaku/rinshan";
 import { Ryanpeikou } from "./yaku/ryanpeikou";
 import { Ryuuiisou } from "./yaku/ryuuiisou";
+import { Shousangen } from "./yaku/shousangen";
 import { Tanyao } from "./yaku/tanyao";
 import { Chiihou, Tenhou } from "./yaku/tenhou";
 import { Tsumo } from "./yaku/tsumo";
@@ -69,6 +70,7 @@ export class Scorer {
       new HatsuYakuhai(),
       new ChunYakuhai(),
       new Daisangen(),
+      new Shousangen(),
     ];
   }
 

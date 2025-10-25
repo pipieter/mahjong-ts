@@ -30,6 +30,7 @@ import {
   WestRound,
   WestSeat,
 } from "../src/yaku/yakuhai";
+import { Shousangen } from "../src";
 
 describe("yaku tanyao", () => {
   test("non-terminals and non-honors result in tanyao", () => {
@@ -636,5 +637,28 @@ describe("yaku yakuhai", () => {
         expect(dragonYaku.check(hand, config)).toEqual(0);
       }
     }
+  });
+});
+
+
+describe("yaku shousangen", () => {
+  test("shousangen results in yaku", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou1, Tiles.Sou2, Tiles.Sou3, Tiles.Sou4, Tiles.Sou5, Tiles.Sou6, Tiles.Hatsu, Tiles.Hatsu, Tiles.Hatsu, Tiles.Haku, Tiles.Haku, Tiles.Haku, Tiles.Chun, Tiles.Chun]);
+
+    const shousangen = new Shousangen();
+    const config = mockConfig();
+
+    expect(shousangen.check(hand, config)).toEqual(2);
+  });
+
+  test("shousangen requires a triplet and a pair", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou1, Tiles.Sou1, Tiles.Sou4, Tiles.Sou5, Tiles.Sou6, Tiles.Hatsu, Tiles.Hatsu, Tiles.Hatsu, Tiles.Haku, Tiles.Haku, Tiles.Haku, Tiles.Chun, Tiles.Chun, Tiles.Chun]);
+
+    const shousangen = new Shousangen();
+    const config = mockConfig();
+
+    expect(shousangen.check(hand, config)).toEqual(0);
   });
 });
