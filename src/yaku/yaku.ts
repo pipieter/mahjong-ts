@@ -77,6 +77,7 @@ export enum YakuId {
   Shousangen = 30,
   Ryanpeikou = 32,
   Honiisou = 34,
+  Chiniisou = 35,
   // Yakuman
   Renhou = 36, // Not supported
   Tenhou = 37,
