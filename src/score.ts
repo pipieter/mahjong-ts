@@ -1,6 +1,7 @@
 import { Hand } from "./hand";
 import { Chankan } from "./yaku/chankan";
 import { Chiitoitsu } from "./yaku/chiitoitsu";
+import { Chiniisou } from "./yaku/chiniisou";
 import { Daisangen } from "./yaku/daisangen";
 import { DoubleRiichi } from "./yaku/doubleriichi";
 import { Haitei } from "./yaku/haitei";
@@ -71,6 +72,7 @@ export class Scorer {
       new ChunYakuhai(),
       new Daisangen(),
       new Shousangen(),
+      new Chiniisou(),
     ];
   }
 

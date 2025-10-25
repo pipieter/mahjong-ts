@@ -30,7 +30,7 @@ import {
   WestRound,
   WestSeat,
 } from "../src/yaku/yakuhai";
-import { Shousangen } from "../src";
+import { Chiniisou, Shousangen } from "../src";
 
 describe("yaku tanyao", () => {
   test("non-terminals and non-honors result in tanyao", () => {
@@ -640,7 +640,6 @@ describe("yaku yakuhai", () => {
   });
 });
 
-
 describe("yaku shousangen", () => {
   test("shousangen results in yaku", () => {
     // prettier-ignore
@@ -660,5 +659,37 @@ describe("yaku shousangen", () => {
     const config = mockConfig();
 
     expect(shousangen.check(hand, config)).toEqual(0);
+  });
+});
+
+describe("yaku chiniisou", () => {
+  test("chiniisou results in yaku", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou4, Tiles.Sou4, Tiles.Sou4, Tiles.Sou5, Tiles.Sou5, Tiles.Sou5, Tiles.Sou8, Tiles.Sou8, Tiles.Sou8, Tiles.Sou9, Tiles.Sou9]);
+
+    const chiniisou = new Chiniisou();
+    const config = mockConfig();
+
+    expect(chiniisou.check(hand, config)).toEqual(6);
+  });
+
+  test("chiniisou is not honiisou", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou4, Tiles.Sou4, Tiles.Sou4, Tiles.Sou5, Tiles.Sou5, Tiles.Sou5, Tiles.Sou8, Tiles.Sou8, Tiles.Sou8, Tiles.Pei, Tiles.Pei]);
+
+    const chiniisou = new Chiniisou();
+    const config = mockConfig();
+
+    expect(chiniisou.check(hand, config)).toEqual(0);
+  });
+
+  test("chiniisou requires a numbered suit", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Nan, Tiles.Nan, Tiles.Nan, Tiles.Pei, Tiles.Pei, Tiles.Pei, Tiles.Chun, Tiles.Chun, Tiles.Chun, Tiles.Haku, Tiles.Haku, Tiles.Shaa, Tiles.Shaa, Tiles.Shaa]);
+
+    const chiniisou = new Chiniisou();
+    const config = mockConfig();
+
+    expect(chiniisou.check(hand, config)).toEqual(0);
   });
 });

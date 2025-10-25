@@ -22,3 +22,4 @@ export * from "./yaku/rinshan";
 export * from "./yaku/yakuhai";
 export * from "./yaku/daisangen";
 export * from "./yaku/shousangen";
+export * from "./yaku/chiniisou";
