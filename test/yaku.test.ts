@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@jest/globals";
-import { Tile, Tiles } from "../src/tile";
+import { getWindTile, Tile, Tiles, Wind } from "../src/tile";
 import { Hand, Meld } from "../src/hand";
 import { Tanyao } from "../src/yaku/tanyao";
 import { Tsumo } from "../src/yaku/tsumo";
@@ -7,7 +7,7 @@ import { Riichi } from "../src/yaku/riichi";
 import { Haitei } from "../src/yaku/haitei";
 import { Houtei } from "../src/yaku/houtei";
 import { mockConfig, verifyUnique } from "./mock";
-import { RiichiCall, Wind, Yaku } from "../src/yaku/yaku";
+import { RiichiCall, Yaku } from "../src/yaku/yaku";
 import { Honiisou } from "../src/yaku/honiisou";
 import { DoubleRiichi } from "../src/yaku/doubleriichi";
 import { Ippatsu } from "../src/yaku/ippatsu";
@@ -558,16 +558,17 @@ describe("yaku yakuhai", () => {
     // prettier-ignore
     const tiles = [Tiles.Sou1, Tiles.Sou2, Tiles.Sou3, Tiles.Man4, Tiles.Man5, Tiles.Man6, Tiles.Pin7, Tiles.Pin8, Tiles.Pin9, Tiles.Pin2, Tiles.Pin2];
 
-    const winds: [Yaku, Tile, Wind][] = [
-      [new EastSeat(), Tiles.Ton, Wind.Ton],
-      [new SouthSeat(), Tiles.Nan, Wind.Nan],
-      [new WestSeat(), Tiles.Shaa, Wind.Shaa],
-      [new NorthSeat(), Tiles.Pei, Wind.Pei],
+    const winds: [Yaku, Wind][] = [
+      [new EastSeat(), Wind.Ton],
+      [new SouthSeat(), Wind.Nan],
+      [new WestSeat(), Wind.Shaa],
+      [new NorthSeat(), Wind.Pei],
     ];
     const yakus = winds.map((wind) => wind[0]);
 
     const config = mockConfig();
-    for (const [yaku, tile, wind] of winds) {
+    for (const [yaku, wind] of winds) {
+      const tile = getWindTile(wind);
       const meld = new Meld([tile, tile, tile], true);
       const hand = verifyUnique(tiles, [meld]);
       config.seat = wind;
@@ -587,16 +588,17 @@ describe("yaku yakuhai", () => {
     // prettier-ignore
     const tiles = [Tiles.Sou1, Tiles.Sou2, Tiles.Sou3, Tiles.Man4, Tiles.Man5, Tiles.Man6, Tiles.Pin7, Tiles.Pin8, Tiles.Pin9, Tiles.Pin2, Tiles.Pin2];
 
-    const winds: [Yaku, Tile, Wind][] = [
-      [new EastRound(), Tiles.Ton, Wind.Ton],
-      [new SouthRound(), Tiles.Nan, Wind.Nan],
-      [new WestRound(), Tiles.Shaa, Wind.Shaa],
-      [new NorthRound(), Tiles.Pei, Wind.Pei],
+    const winds: [Yaku, Wind][] = [
+      [new EastRound(), Wind.Ton],
+      [new SouthRound(), Wind.Nan],
+      [new WestRound(), Wind.Shaa],
+      [new NorthRound(), Wind.Pei],
     ];
     const yakus = winds.map((wind) => wind[0]);
 
     const config = mockConfig();
-    for (const [yaku, tile, wind] of winds) {
+    for (const [yaku, wind] of winds) {
+      const tile = getWindTile(wind);
       const meld = new Meld([tile, tile, tile], true);
       const hand = verifyUnique(tiles, [meld]);
       config.round = wind;
