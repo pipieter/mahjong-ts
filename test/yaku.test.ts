@@ -30,7 +30,7 @@ import {
   WestRound,
   WestSeat,
 } from "../src/yaku/yakuhai";
-import { Chiniisou, Sankantsu, Shousangen } from "../src";
+import { Chiniisou, Sankantsu, Shousangen, Toitoi } from "../src";
 
 describe("yaku tanyao", () => {
   test("non-terminals and non-honors result in tanyao", () => {
@@ -736,3 +736,36 @@ describe("yaku sankantsu", () => {
     expect(sankantsu.check(hand, config)).toEqual(0);
   });
 });
+
+describe("yaku toitoi", () => {
+  test("toitoi results in yaku", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou2, Tiles.Sou2, Tiles.Sou2, Tiles.Man4, Tiles.Man4, Tiles.Man4, Tiles.Haku, Tiles.Haku, Tiles.Haku, Tiles.Pin2, Tiles.Pin2];
+    const hand = verifyUnique(tiles);
+    const toitoi = new Toitoi();
+    const config = mockConfig();
+
+    expect(toitoi.check(hand, config)).toEqual(2);
+  });
+
+  test("toitoi can contain kans", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou2, Tiles.Sou2, Tiles.Sou2, Tiles.Man4, Tiles.Man4, Tiles.Man4, Tiles.Haku, Tiles.Haku, Tiles.Haku, Tiles.Pin2, Tiles.Pin2];
+    const melds = [new Meld([Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou1], false)];
+    const hand = verifyUnique(tiles, melds);
+    const toitoi = new Toitoi();
+    const config = mockConfig();
+
+    expect(toitoi.check(hand, config)).toEqual(2);
+  });
+
+  test("toitoi cannot contain sequences", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou2, Tiles.Sou3, Tiles.Sou4, Tiles.Man4, Tiles.Man4, Tiles.Man4, Tiles.Haku, Tiles.Haku, Tiles.Haku, Tiles.Pin2, Tiles.Pin2];
+    const melds = [new Meld([Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou1], false)];
+    const hand = verifyUnique(tiles, melds);
+    const toitoi = new Toitoi();
+    const config = mockConfig();
+
+    expect(toitoi.check(hand, config)).toEqual(0);
+  });});
