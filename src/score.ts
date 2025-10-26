@@ -1,4 +1,4 @@
-import { Pinfu } from ".";
+import { Pinfu, Sankantsu } from ".";
 import { Hand } from "./hand";
 import { getWindTile, Honors, Terminals, Tiles } from "./tile";
 import { findMeldsAndPair, removeFromArray } from "./util";
@@ -77,6 +77,7 @@ export class Scorer {
       new Daisangen(),
       new Shousangen(),
       new Chiniisou(),
+      new Sankantsu(),
     ];
   }
 
