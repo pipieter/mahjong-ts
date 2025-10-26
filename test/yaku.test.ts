@@ -30,7 +30,7 @@ import {
   WestRound,
   WestSeat,
 } from "../src/yaku/yakuhai";
-import { Chiniisou, Shousangen } from "../src";
+import { Chiniisou, Sankantsu, Shousangen } from "../src";
 
 describe("yaku tanyao", () => {
   test("non-terminals and non-honors result in tanyao", () => {
@@ -703,5 +703,36 @@ describe("yaku chiniisou", () => {
     const config = mockConfig();
 
     expect(chiniisou.check(hand, config)).toEqual(0);
+  });
+});
+
+describe("yaku sankantsu", () => {
+  test("sankantsu results in yaku", () => {
+    const tiles = [Tiles.Sou4, Tiles.Sou5, Tiles.Sou6, Tiles.Nan, Tiles.Nan];
+    const melds = [
+      new Meld([Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou1], false),
+      new Meld([Tiles.Man1, Tiles.Man1, Tiles.Man1, Tiles.Man1], true),
+      new Meld([Tiles.Pin4, Tiles.Pin4, Tiles.Pin4, Tiles.Pin4], false),
+    ];
+    const hand = verifyUnique(tiles, melds);
+    const sankantsu = new Sankantsu();
+    const config = mockConfig();
+
+    expect(sankantsu.check(hand, config)).toEqual(2);
+  });
+
+  test("sankantsu requires exactly three kans", () => {
+    const tiles = [Tiles.Nan, Tiles.Nan];
+    const melds = [
+      new Meld([Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou1], false),
+      new Meld([Tiles.Man1, Tiles.Man1, Tiles.Man1, Tiles.Man1], true),
+      new Meld([Tiles.Pin4, Tiles.Pin4, Tiles.Pin4, Tiles.Pin4], false),
+      new Meld([Tiles.Pin5, Tiles.Pin5, Tiles.Pin5, Tiles.Pin5], true),
+    ];
+    const hand = verifyUnique(tiles, melds);
+    const sankantsu = new Sankantsu();
+    const config = mockConfig();
+
+    expect(sankantsu.check(hand, config)).toEqual(0);
   });
 });
