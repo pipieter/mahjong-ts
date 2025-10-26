@@ -1,4 +1,7 @@
+import { Pinfu } from ".";
 import { Hand } from "./hand";
+import { getWindTile, Honors, Terminals, Tiles } from "./tile";
+import { findMeldsAndPair, removeFromArray } from "./util";
 import { Chankan } from "./yaku/chankan";
 import { Chiitoitsu } from "./yaku/chiitoitsu";
 import { Chiniisou } from "./yaku/chiniisou";
@@ -35,6 +38,7 @@ import {
 export interface Score {
   yakus: YakuId[];
   han: number;
+  fu: number;
 }
 
 export class Scorer {
@@ -80,6 +84,7 @@ export class Scorer {
     const score: Score = {
       yakus: [],
       han: 0,
+      fu: this.fu(hand, config),
     };
 
     for (const yaku of this.yakus) {
@@ -94,7 +99,6 @@ export class Scorer {
   }
 
   public fu(hand: Hand, config: YakuConfig): number {
-    /*
     const pinfu = new Pinfu().check(hand, config) > 0;
     const chiitoitsu = new Chiitoitsu().check(hand, config) > 0;
 
@@ -103,7 +107,7 @@ export class Scorer {
       return 25;
     }
 
-    // Special case: pinfu is always worth 20 fu (on tsumo) or 30 fu (on ron)
+    // "Special" case: pinfu is always worth 20 fu (on tsumo) or 30 fu (on ron)
     if (pinfu) {
       if (config.tsumo) {
         return 20;
@@ -115,7 +119,7 @@ export class Scorer {
     let fu = 20;
     const terminalHonorIds = [...Honors, ...Terminals].map((tile) => tile.id);
 
-    for (const meld of this.melds) {
+    for (const meld of hand.melds) {
       let meldFu = 0;
       if (meld.isPon()) {
         meldFu = 4;
@@ -133,18 +137,53 @@ export class Scorer {
       fu += meldFu;
     }
 
-    if (waits.length > 1) {
+    // Calculate the waits. More specifically, if there was exactly one wait, increase the fu by 2.
+    const waits = [];
+    const meldsInHand = hand.melds.filter((meld) => !meld.open && !meld.isKan());
+    const tilesInHand = meldsInHand.flatMap((meld) => meld.tiles);
+    const tenpaiInHand = removeFromArray(tilesInHand, [config.agari]);
+
+    for (const tile of Object.values(Tiles)) {
+      // Check if the tile could have completed any set of melds and a pair
+      if (findMeldsAndPair([...tenpaiInHand, tile])) {
+        waits.push(tile);
+      }
+    }
+
+    if (waits.length <= 1) {
       fu += 2;
     }
 
-    // Important, if the hand is open and the fu is 20, a +2 is added to ensure it rounds to 30 fu
-    if (fu === 20 && this.isOpen()) {
+    // If hand had a yakuhai pair, or the pair was a seat or round wind, increase fu by 2
+    const yakuhai = new Set([
+      Tiles.Haku.id,
+      Tiles.Hatsu.id,
+      Tiles.Chun.id,
+      getWindTile(config.seat).id,
+      getWindTile(config.round).id,
+    ]);
+    const pair = hand.melds.filter((meld) => meld.isPair())[0];
+    if (pair) {
+      if (yakuhai.has(pair.tiles[0].id)) {
+        fu += 2;
+      }
+    }
+
+    // If hand won by tsumo, add 2 fu
+    if (config.tsumo) {
       fu += 2;
+    }
+    // Otherwise, if it won by ron, increase it by 10
+    else {
+      fu += 10;
+    }
+
+    // If hand is open and it has no other fu (i.e. is at 20 fu), it is set to 30 fu
+    if (fu === 20 && hand.isOpen()) {
+      fu = 30;
     }
 
     // Round up to the nearest 10
     return Math.ceil(fu / 10) * 10;
-    */
-    return 0;
   }
 }
