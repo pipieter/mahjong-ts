@@ -30,7 +30,7 @@ import {
   WestRound,
   WestSeat,
 } from "../src/yaku/yakuhai";
-import { Chiniisou, Sankantsu, Shousangen, Toitoi } from "../src";
+import { Chiniisou, Honrouto, Sankantsu, Shousangen, Toitoi } from "../src";
 
 describe("yaku tanyao", () => {
   test("non-terminals and non-honors result in tanyao", () => {
@@ -768,4 +768,47 @@ describe("yaku toitoi", () => {
     const config = mockConfig();
 
     expect(toitoi.check(hand, config)).toEqual(0);
-  });});
+  });
+});
+
+describe("yaku honrouto", () => {
+  test("honrouto results in yaku", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou9, Tiles.Sou9, Tiles.Sou9, Tiles.Man1, Tiles.Man1, Tiles.Man1, Tiles.Nan, Tiles.Nan, Tiles.Nan, Tiles.Haku, Tiles.Haku];
+    const hand = verifyUnique(tiles);
+    const honrouto = new Honrouto();
+    const config = mockConfig();
+
+    expect(honrouto.check(hand, config)).toEqual(2);
+  });
+
+  test("honrouto requires at least one honor", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou9, Tiles.Sou9, Tiles.Sou9, Tiles.Man1, Tiles.Man1, Tiles.Man1, Tiles.Pin1, Tiles.Pin1, Tiles.Pin1, Tiles.Pin9, Tiles.Pin9];
+    const hand = verifyUnique(tiles);
+    const honrouto = new Honrouto();
+    const config = mockConfig();
+
+    expect(honrouto.check(hand, config)).toEqual(0);
+  });
+
+  test("honrouto requires at least one terminal", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Nan, Tiles.Nan, Tiles.Nan, Tiles.Pei, Tiles.Pei, Tiles.Pei, Tiles.Ton, Tiles.Ton, Tiles.Ton, Tiles.Haku, Tiles.Haku, Tiles.Haku, Tiles.Chun, Tiles.Chun];
+    const hand = verifyUnique(tiles);
+    const honrouto = new Honrouto();
+    const config = mockConfig();
+
+    expect(honrouto.check(hand, config)).toEqual(0);
+  });
+
+  test("honrouto cannot contain non-terminal or non-honors", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou2, Tiles.Sou2, Tiles.Sou2, Tiles.Sou9, Tiles.Sou9, Tiles.Sou9, Tiles.Man1, Tiles.Man1, Tiles.Man1, Tiles.Nan, Tiles.Nan, Tiles.Nan, Tiles.Haku, Tiles.Haku];
+    const hand = verifyUnique(tiles);
+    const honrouto = new Honrouto();
+    const config = mockConfig();
+
+    expect(honrouto.check(hand, config)).toEqual(0);
+  });
+});

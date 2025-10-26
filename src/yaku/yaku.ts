@@ -69,6 +69,7 @@ export enum YakuId {
   Sankantsu = 27,
   Toitoi = 28,
   Shousangen = 30,
+  Honrouto = 31,
   Ryanpeikou = 32,
   Honiisou = 34,
   Chiniisou = 35,
