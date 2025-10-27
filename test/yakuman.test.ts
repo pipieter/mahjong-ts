@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@jest/globals";
 import { mockConfig, verifyUnique } from "./mock";
-import { Daisangen, Wind, Chiihou, Tenhou, Tiles, Ryuuiisou } from "../src";
+import { Daisangen, Wind, Chiihou, Tenhou, Tiles, Ryuuiisou, Chinroutou } from "../src";
 
 describe("yakuman ryuuiisou", () => {
   test("all greens results in yakuman", () => {
@@ -79,5 +79,27 @@ describe("yakuman ryuuiisou", () => {
     const config = mockConfig();
 
     expect(daisangen.check(hand, config)).toEqual(0);
+  });
+});
+
+describe("yakuman chinroutou", () => {
+  test("all terminals results in yakuman", () => {
+    // prettier-ignore
+    const hand  =verifyUnique([Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou9, Tiles.Sou9, Tiles.Sou9, Tiles.Man1,Tiles.Man1, Tiles.Man1, Tiles.Man9, Tiles.Man9, Tiles.Man9, Tiles.Pin1, Tiles.Pin1]);
+
+    const chinroutou = new Chinroutou();
+    const config = mockConfig();
+
+    expect(chinroutou.check(hand, config)).toEqual(13);
+  });
+
+  test("chinroutou cannot contain honors", () => {
+    // prettier-ignore
+    const hand  =verifyUnique([Tiles.Haku, Tiles.Haku, Tiles.Haku, Tiles.Sou9, Tiles.Sou9, Tiles.Sou9, Tiles.Man1,Tiles.Man1, Tiles.Man1, Tiles.Man9, Tiles.Man9, Tiles.Man9, Tiles.Pin1, Tiles.Pin1]);
+
+    const chinroutou = new Chinroutou();
+    const config = mockConfig();
+
+    expect(chinroutou.check(hand, config)).toEqual(0);
   });
 });
