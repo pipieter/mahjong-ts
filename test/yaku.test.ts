@@ -30,7 +30,7 @@ import {
   WestRound,
   WestSeat,
 } from "../src/yaku/yakuhai";
-import { Chiniisou, Honrouto, Sankantsu, Shousangen, Toitoi } from "../src";
+import { Chiniisou, Chinroutou, Honrouto, Junchan, Sankantsu, Shousangen, Toitoi } from "../src";
 
 describe("yaku tanyao", () => {
   test("non-terminals and non-honors result in tanyao", () => {
@@ -810,5 +810,48 @@ describe("yaku honrouto", () => {
     const config = mockConfig();
 
     expect(honrouto.check(hand, config)).toEqual(0);
+  });
+});
+
+describe("yaku junchan", () => {
+  test("all terminals in each meld results in junchan", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou1, Tiles.Sou2, Tiles.Sou3, Tiles.Sou9, Tiles.Sou9, Tiles.Sou9, Tiles.Man1, Tiles.Man2, Tiles.Man3, Tiles.Man7, Tiles.Man8, Tiles.Man9, Tiles.Pin1, Tiles.Pin1];
+    const hand = verifyUnique(tiles);
+    const junchan = new Junchan();
+    const config = mockConfig();
+
+    expect(junchan.check(hand, config)).toEqual(3);
+  });
+
+  test("open junchan has less han than closed yaku", () => {
+    const opens: [boolean, number][] = [
+      [true, 2],
+      [false, 3],
+    ];
+
+    for (const [open, han] of opens) {
+      // prettier-ignore
+      const tiles = [Tiles.Sou9, Tiles.Sou9, Tiles.Sou9, Tiles.Man1, Tiles.Man2, Tiles.Man3, Tiles.Man7, Tiles.Man8, Tiles.Man9, Tiles.Pin1, Tiles.Pin1];
+      const melds = [new Meld([Tiles.Sou1, Tiles.Sou2, Tiles.Sou3], open)];
+
+      const hand = verifyUnique(tiles, melds);
+      const junchan = new Junchan();
+      const config = mockConfig();
+
+      expect(junchan.check(hand, config)).toEqual(han);
+    }
+  });
+
+  test("junchan and chinroutou are incompatible", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou9, Tiles.Sou9, Tiles.Sou9, Tiles.Man1,Tiles.Man1, Tiles.Man1, Tiles.Man9, Tiles.Man9, Tiles.Man9, Tiles.Pin1, Tiles.Pin1]);
+
+    const junchan = new Junchan();
+    const chinroutou = new Chinroutou();
+    const config = mockConfig();
+
+    expect(junchan.check(hand, config)).toEqual(0);
+    expect(chinroutou.check(hand, config)).toEqual(13);
   });
 });

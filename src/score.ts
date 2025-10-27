@@ -1,4 +1,4 @@
-import { Chinroutou, Honrouto, Pinfu, Sankantsu, Toitoi } from ".";
+import { Chinroutou, Honrouto, Junchan, Pinfu, Sankantsu, Toitoi } from ".";
 import { Hand } from "./hand";
 import { getWindTile, Honors, Terminals, Tiles } from "./tile";
 import { findMeldsAndPair, removeFromArray } from "./util";
@@ -81,6 +81,7 @@ export class Scorer {
       new Toitoi(),
       new Honrouto(),
       new Chinroutou(),
+      new Junchan(),
     ];
   }
 
