@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@jest/globals";
 import { mockConfig, verifyUnique } from "./mock";
-import { Daisangen, Wind, Chiihou, Tenhou, Tiles, Ryuuiisou, Chinroutou } from "../src";
+import { Daisangen, Wind, Chiihou, Tenhou, Tiles, Ryuuiisou, Chinroutou, Suuankou } from "../src";
 
 describe("yakuman ryuuiisou", () => {
   test("all greens results in yakuman", () => {
@@ -111,5 +111,38 @@ describe("yakuman chinroutou", () => {
     const config = mockConfig();
 
     expect(chinroutou.check(hand, config)).toEqual(0);
+  });
+});
+
+describe("yakuman suuankou", () => {
+  test("four concealed triplets result in yakuman", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou5, Tiles.Sou5, Tiles.Sou5, Tiles.Man2, Tiles.Man2, Tiles.Man2, Tiles.Pin4, Tiles.Pin4, Tiles.Pin4, Tiles.Haku, Tiles.Haku];
+    const hand = verifyUnique(tiles);
+
+    const suuankou = new Suuankou();
+    const config = mockConfig();
+    config.tsumo = true;
+    config.agari = Tiles.Sou1;
+
+    expect(suuankou.check(hand, config)).toEqual(13);
+  });
+
+  test("suuankou is invalid if triplet completed on ron", () => {
+    const tsumos: [boolean, number][] = [
+      [true, 13],
+      [false, 0],
+    ];
+    // prettier-ignore
+    const tiles = [Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou5, Tiles.Sou5, Tiles.Sou5, Tiles.Man2, Tiles.Man2, Tiles.Man2, Tiles.Pin4, Tiles.Pin4, Tiles.Pin4, Tiles.Haku, Tiles.Haku];
+    const hand = verifyUnique(tiles);
+    const suuankou = new Suuankou();
+    const config = mockConfig();
+    config.agari = Tiles.Sou1;
+
+    for (const [tsumo, han] of tsumos) {
+      config.tsumo = tsumo;
+      expect(suuankou.check(hand, config)).toEqual(han);
+    }
   });
 });
