@@ -30,7 +30,7 @@ import {
   WestRound,
   WestSeat,
 } from "../src/yaku/yakuhai";
-import { Chiniisou, Chinroutou, Honrouto, Junchan, Sankantsu, Shousangen, Toitoi } from "../src";
+import { Chiniisou, Chinroutou, Honrouto, Junchan, Sanankou, Sankantsu, Shousangen, Toitoi } from "../src";
 
 describe("yaku tanyao", () => {
   test("non-terminals and non-honors result in tanyao", () => {
@@ -853,5 +853,80 @@ describe("yaku junchan", () => {
 
     expect(junchan.check(hand, config)).toEqual(0);
     expect(chinroutou.check(hand, config)).toEqual(13);
+  });
+});
+
+describe("yaku sanankou", () => {
+  // These test cases are taken from the riichi wiki
+  // https://riichi.wiki/Sanankou
+
+  test("three closed triplets results in yaku", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Pin1, Tiles.Pin1, Tiles.Pin1, Tiles.Pin3, Tiles.Pin3, Tiles.Pin3, Tiles.Pin5, Tiles.Pin5, Tiles.Pin5, Tiles.Sou6, Tiles.Sou6];
+    const melds = [new Meld([Tiles.Sou1, Tiles.Sou2, Tiles.Sou3], true)];
+    const hand = verifyUnique(tiles, melds);
+
+    const sanankou = new Sanankou();
+    const config = mockConfig();
+    config.agari = Tiles.Sou6;
+
+    expect(sanankou.check(hand, config)).toEqual(2);
+  });
+
+  test("ron triplets aren't closed", () => {
+    // This hand contains a chii and is waiting to complete a triplet. If the hand is won on ron, the third
+    // triplet will be open, and sanankou will not be valid.
+
+    const agaris: [Tile, boolean, number][] = [
+      [Tiles.Pin3, true, 2],
+      [Tiles.Pin6, true, 2],
+      [Tiles.Pin3, false, 0],
+      [Tiles.Pin6, false, 0],
+    ];
+
+    for (const [agari, tsumo, han] of agaris) {
+      const tiles = [Tiles.Pin3, Tiles.Pin3, Tiles.Pin6, Tiles.Pin6, agari];
+      const melds = [
+        new Meld([Tiles.Man1, Tiles.Man2, Tiles.Man3], false),
+        new Meld([Tiles.Pin1, Tiles.Pin1, Tiles.Pin1], false),
+        new Meld([Tiles.Sou6, Tiles.Sou6, Tiles.Sou6], false),
+      ];
+      const hand = verifyUnique(tiles, melds);
+
+      const sanankou = new Sanankou();
+      const config = mockConfig();
+      config.agari = agari;
+      config.tsumo = tsumo;
+
+      expect(sanankou.check(hand, config)).toEqual(han);
+    }
+  });
+
+  test("sanankou must contain exactly three closed triplets", () => {
+    // This hand has the potential to reach suuankou if it wins by tsumo. Because sanankou and suuankou
+    // are incompatible, this hand needs to win by ron to get sanankou
+    const agaris: [Tile, boolean, number][] = [
+      [Tiles.Ton, true, 0],
+      [Tiles.Ton, false, 2],
+      [Tiles.Sou3, true, 0],
+      [Tiles.Sou3, false, 2],
+    ];
+
+    for (const [agari, tsumo, han] of agaris) {
+      const tiles = [Tiles.Sou3, Tiles.Sou3, Tiles.Ton, Tiles.Ton, agari];
+      const melds = [
+        new Meld([Tiles.Man7, Tiles.Man7, Tiles.Man7], false),
+        new Meld([Tiles.Pin8, Tiles.Pin8, Tiles.Pin8], false),
+        new Meld([Tiles.Chun, Tiles.Chun, Tiles.Chun], false),
+      ];
+      const hand = verifyUnique(tiles, melds);
+
+      const sanankou = new Sanankou();
+      const config = mockConfig();
+      config.agari = agari;
+      config.tsumo = tsumo;
+
+      expect(sanankou.check(hand, config)).toEqual(han);
+    }
   });
 });
