@@ -85,7 +85,7 @@ describe("yakuman ryuuiisou", () => {
 describe("yakuman chinroutou", () => {
   test("all terminals results in yakuman", () => {
     // prettier-ignore
-    const hand  =verifyUnique([Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou9, Tiles.Sou9, Tiles.Sou9, Tiles.Man1,Tiles.Man1, Tiles.Man1, Tiles.Man9, Tiles.Man9, Tiles.Man9, Tiles.Pin1, Tiles.Pin1]);
+    const hand = verifyUnique([Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou9, Tiles.Sou9, Tiles.Sou9, Tiles.Man1,Tiles.Man1, Tiles.Man1, Tiles.Man9, Tiles.Man9, Tiles.Man9, Tiles.Pin1, Tiles.Pin1]);
 
     const chinroutou = new Chinroutou();
     const config = mockConfig();
@@ -93,9 +93,19 @@ describe("yakuman chinroutou", () => {
     expect(chinroutou.check(hand, config)).toEqual(13);
   });
 
+  test("chinroutou cannot contain non-terminals", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou2, Tiles.Sou2, Tiles.Sou2, Tiles.Sou9, Tiles.Sou9, Tiles.Sou9, Tiles.Man1,Tiles.Man1, Tiles.Man1, Tiles.Man9, Tiles.Man9, Tiles.Man9, Tiles.Pin1, Tiles.Pin1]);
+
+    const chinroutou = new Chinroutou();
+    const config = mockConfig();
+
+    expect(chinroutou.check(hand, config)).toEqual(0);
+  });
+
   test("chinroutou cannot contain honors", () => {
     // prettier-ignore
-    const hand  =verifyUnique([Tiles.Haku, Tiles.Haku, Tiles.Haku, Tiles.Sou9, Tiles.Sou9, Tiles.Sou9, Tiles.Man1,Tiles.Man1, Tiles.Man1, Tiles.Man9, Tiles.Man9, Tiles.Man9, Tiles.Pin1, Tiles.Pin1]);
+    const hand = verifyUnique([Tiles.Haku, Tiles.Haku, Tiles.Haku, Tiles.Sou9, Tiles.Sou9, Tiles.Sou9, Tiles.Man1,Tiles.Man1, Tiles.Man1, Tiles.Man9, Tiles.Man9, Tiles.Man9, Tiles.Pin1, Tiles.Pin1]);
 
     const chinroutou = new Chinroutou();
     const config = mockConfig();
