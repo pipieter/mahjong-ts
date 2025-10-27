@@ -61,6 +61,19 @@ export class Meld {
     return true;
   }
 
+  public isOpen(): boolean {
+    return this.open;
+  }
+
+  public isClosed(): boolean {
+    return !this.open;
+  }
+
+  public hasTile(tile: Tile): boolean {
+    const ids = this.tiles.map((tile) => tile.id);
+    return ids.includes(tile.id);
+  }
+
   public toString(): string {
     const tiles = [...this.tiles];
     tiles.sort((a, b) => a.id - b.id);
