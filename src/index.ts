@@ -30,3 +30,4 @@ export * from "./yaku/honrouto";
 export * from "./yaku/chinroutou";
 export * from "./yaku/junchan";
 export * from "./yaku/sanankou";
+export * from "./yaku/suuankou";
