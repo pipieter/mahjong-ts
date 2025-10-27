@@ -27,3 +27,4 @@ export * from "./yaku/pinfu";
 export * from "./yaku/sankantsu";
 export * from "./yaku/toitoi";
 export * from "./yaku/honrouto";
+export * from "./yaku/chinroutou";

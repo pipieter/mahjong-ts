@@ -18,7 +18,7 @@ export function mockConfig(): YakuConfig {
     turn: 10,
     chankan: false,
     rinshan: false,
-    agari: Tiles.Sou1 // Should be irrelevant, except for the pinfu tests
+    agari: Tiles.Sou1, // Should be irrelevant, except for the pinfu tests
   };
 }
 

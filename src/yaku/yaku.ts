@@ -79,6 +79,7 @@ export enum YakuId {
   Chiihou = 38,
   Daisangen = 39,
   Ryuuiisou = 43,
+  Chinroutou = 44,
 }
 
 export abstract class Yaku {
