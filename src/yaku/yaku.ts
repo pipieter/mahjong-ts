@@ -67,6 +67,7 @@ export enum YakuId {
   Chiitoitsu = 22,
   Ittsuu = 24,
   SanshokuDoujun = 25,
+  SanshokuDoukou = 26,
   Sankantsu = 27,
   Toitoi = 28,
   Sanankou = 29,

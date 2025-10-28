@@ -39,6 +39,7 @@ import {
   Sanankou,
   Sankantsu,
   SanshokuDoujun,
+  SanshokuDoukou,
   Shousangen,
   Toitoi,
 } from "../src";
@@ -1001,6 +1002,64 @@ describe("yaku sanshoku doujun", () => {
       const hand = verifyUnique(tiles, melds);
 
       expect(sanshokuDoujun.check(hand, config)).toEqual(han);
+    }
+  });
+});
+
+describe("yaku sanshoku doukou", () => {
+  test("three colored triplets results in yaku", () => {
+    const tiles = [
+      [Tiles.Man2, Tiles.Man2, Tiles.Man2],
+      [Tiles.Pin2, Tiles.Pin2, Tiles.Pin2],
+      [Tiles.Sou2, Tiles.Sou2, Tiles.Sou2],
+      [Tiles.Sou6, Tiles.Sou7, Tiles.Sou8],
+      [Tiles.Ton, Tiles.Ton],
+    ].flat();
+    const hand = verifyUnique(tiles);
+
+    const sanshokuDoukou = new SanshokuDoukou();
+    const config = mockConfig();
+
+    expect(sanshokuDoukou.check(hand, config)).toEqual(2);
+  });
+
+  test("sanshoku doukou requires three same numbered triplets", () => {
+    const tiles = [
+      [Tiles.Man2, Tiles.Man2, Tiles.Man2],
+      [Tiles.Pin2, Tiles.Pin2, Tiles.Pin2],
+      [Tiles.Sou3, Tiles.Sou3, Tiles.Sou3],
+      [Tiles.Sou6, Tiles.Sou7, Tiles.Sou8],
+      [Tiles.Ton, Tiles.Ton],
+    ].flat();
+    const hand = verifyUnique(tiles);
+
+    const sanshokuDoukou = new SanshokuDoukou();
+    const config = mockConfig();
+
+    expect(sanshokuDoukou.check(hand, config)).toEqual(0);
+  });
+
+  test("sanshoku doukou can depend on agari", () => {
+    const agaris: [Tile, number][] = [
+      [Tiles.Sou3, 2],
+      [Tiles.Nan, 0],
+    ];
+
+    const sanshokuDoukou = new SanshokuDoukou();
+    const config = mockConfig();
+
+    for (const [agari, han] of agaris) {
+      const tiles = [
+        [Tiles.Sou6, Tiles.Sou7, Tiles.Sou8],
+        [Tiles.Man3, Tiles.Man3, Tiles.Man3],
+        [Tiles.Pin3, Tiles.Pin3, Tiles.Pin3],
+        [Tiles.Sou3, Tiles.Sou3],
+        [Tiles.Nan, Tiles.Nan],
+        [agari],
+      ].flat();
+      const hand = verifyUnique(tiles);
+
+      expect(sanshokuDoukou.check(hand, config)).toEqual(han);
     }
   });
 });
