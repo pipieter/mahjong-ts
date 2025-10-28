@@ -30,7 +30,17 @@ import {
   WestRound,
   WestSeat,
 } from "../src/yaku/yakuhai";
-import { Chiniisou, Chinroutou, Honrouto, Junchan, Sanankou, Sankantsu, Shousangen, Toitoi } from "../src";
+import {
+  Chiniisou,
+  Chinroutou,
+  Honrouto,
+  Junchan,
+  Sanankou,
+  Sankantsu,
+  SanshokuDoujun,
+  Shousangen,
+  Toitoi,
+} from "../src";
 
 describe("yaku tanyao", () => {
   test("non-terminals and non-honors result in tanyao", () => {
@@ -927,6 +937,69 @@ describe("yaku sanankou", () => {
       config.tsumo = tsumo;
 
       expect(sanankou.check(hand, config)).toEqual(han);
+    }
+  });
+});
+
+describe("yaku sanshoku doujun", () => {
+  test("three colored sequences results in yaku", () => {
+    const tiles = [
+      [Tiles.Man1, Tiles.Man2, Tiles.Man3],
+      [Tiles.Pin1, Tiles.Pin2, Tiles.Pin3],
+      [Tiles.Sou1, Tiles.Sou2, Tiles.Sou3],
+      [Tiles.Sou6, Tiles.Sou7, Tiles.Sou8],
+      [Tiles.Ton, Tiles.Ton],
+    ].flat();
+    const hand = verifyUnique(tiles);
+
+    const sanshokuDoujun = new SanshokuDoujun();
+    const config = mockConfig();
+
+    expect(sanshokuDoujun.check(hand, config)).toEqual(2);
+  });
+
+  test("sanshoku doujun is worth less when open", () => {
+    const opens: [boolean, number][] = [
+      [true, 1],
+      [false, 2],
+    ];
+    const tiles = [
+      [Tiles.Pin1, Tiles.Pin2, Tiles.Pin3],
+      [Tiles.Sou1, Tiles.Sou2, Tiles.Sou3],
+      [Tiles.Sou6, Tiles.Sou7, Tiles.Sou8],
+      [Tiles.Ton, Tiles.Ton],
+    ].flat();
+
+    const sanshokuDoujun = new SanshokuDoujun();
+    const config = mockConfig();
+    for (const [open, han] of opens) {
+      const melds = [new Meld([Tiles.Man1, Tiles.Man2, Tiles.Man3], open)];
+      const hand = verifyUnique(tiles, melds);
+
+      expect(sanshokuDoujun.check(hand, config)).toEqual(han);
+    }
+  });
+
+  test("sanshoku doujun can depend on agari", () => {
+    const agaris: [Tile, number][] = [
+      [Tiles.Man1, 0],
+      [Tiles.Man4, 2],
+    ];
+    const tiles = [
+      [Tiles.Pin2, Tiles.Pin3, Tiles.Pin4],
+      [Tiles.Sou2, Tiles.Sou3, Tiles.Sou4],
+      [Tiles.Sou6, Tiles.Sou7, Tiles.Sou8],
+      [Tiles.Ton, Tiles.Ton],
+    ].flat();
+
+    const sanshokuDoujun = new SanshokuDoujun();
+    const config = mockConfig();
+
+    for (const [agari, han] of agaris) {
+      const melds = [new Meld([Tiles.Man2, Tiles.Man3, agari], false)];
+      const hand = verifyUnique(tiles, melds);
+
+      expect(sanshokuDoujun.check(hand, config)).toEqual(han);
     }
   });
 });
