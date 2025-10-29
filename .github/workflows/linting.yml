@@ -21,7 +21,7 @@ jobs:
 
       - name: Run eslint
       # Based on the npm run lint command
-        run: eslint .
+        run: npx eslint .
 
   prettier:
     runs-on: ubuntu-latest
@@ -37,4 +37,4 @@ jobs:
 
       - name: Run prettier
         # Based on the npm run prettier command
-        run: prettier src/*.ts src/**/*.ts test/*.ts
+        run: npx prettier src/*.ts src/**/*.ts test/*.ts
