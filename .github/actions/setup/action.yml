@@ -9,3 +9,4 @@ runs:
     with:
       node-version: 24
   - run: npm ci
+    shell: bash
