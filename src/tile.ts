@@ -22,6 +22,50 @@ export class Tile {
   public toString(): string {
     return `${this.suit()}${this.number()}`;
   }
+
+  /**
+   * The tile of which this tile is the dora indicator to. For example, if this tile were sou four, this dora
+   * of that tile would be sou five.
+   */
+  public dora(): Tile {
+    const dora: { [key: number]: Tile } = {};
+    dora[Tiles.Man1.id] = Tiles.Man2;
+    dora[Tiles.Man2.id] = Tiles.Man3;
+    dora[Tiles.Man3.id] = Tiles.Man4;
+    dora[Tiles.Man4.id] = Tiles.Man5;
+    dora[Tiles.Man5.id] = Tiles.Man6;
+    dora[Tiles.Man6.id] = Tiles.Man7;
+    dora[Tiles.Man7.id] = Tiles.Man8;
+    dora[Tiles.Man8.id] = Tiles.Man9;
+    dora[Tiles.Man9.id] = Tiles.Man1;
+    dora[Tiles.Pin1.id] = Tiles.Pin2;
+    dora[Tiles.Pin2.id] = Tiles.Pin3;
+    dora[Tiles.Pin3.id] = Tiles.Pin4;
+    dora[Tiles.Pin4.id] = Tiles.Pin5;
+    dora[Tiles.Pin5.id] = Tiles.Pin6;
+    dora[Tiles.Pin6.id] = Tiles.Pin7;
+    dora[Tiles.Pin7.id] = Tiles.Pin8;
+    dora[Tiles.Pin8.id] = Tiles.Pin9;
+    dora[Tiles.Pin9.id] = Tiles.Pin1;
+    dora[Tiles.Sou1.id] = Tiles.Sou2;
+    dora[Tiles.Sou2.id] = Tiles.Sou3;
+    dora[Tiles.Sou3.id] = Tiles.Sou4;
+    dora[Tiles.Sou4.id] = Tiles.Sou5;
+    dora[Tiles.Sou5.id] = Tiles.Sou6;
+    dora[Tiles.Sou6.id] = Tiles.Sou7;
+    dora[Tiles.Sou7.id] = Tiles.Sou8;
+    dora[Tiles.Sou8.id] = Tiles.Sou9;
+    dora[Tiles.Sou9.id] = Tiles.Sou1;
+    dora[Tiles.Ton.id] = Tiles.Nan;
+    dora[Tiles.Nan.id] = Tiles.Shaa;
+    dora[Tiles.Shaa.id] = Tiles.Pei;
+    dora[Tiles.Pei.id] = Tiles.Ton;
+    dora[Tiles.Haku.id] = Tiles.Hatsu;
+    dora[Tiles.Hatsu.id] = Tiles.Chun;
+    dora[Tiles.Chun.id] = Tiles.Haku;
+
+    return dora[this.id];
+  }
 }
 
 export enum Suit {
@@ -62,13 +106,20 @@ export const Tiles = {
   Sou7: new Tile(24),
   Sou8: new Tile(25),
   Sou9: new Tile(26),
-  Ton: new Tile(27), // East wind
-  Nan: new Tile(28), // South wind
-  Shaa: new Tile(29), // West wind
-  Pei: new Tile(30), // North wind
-  Haku: new Tile(31), // White dragon
-  Hatsu: new Tile(32), // Green dragon
-  Chun: new Tile(33), // Red dragon
+  /** East wind */
+  Ton: new Tile(27),
+  /**  South wind */
+  Nan: new Tile(28),
+  /**  West wind */
+  Shaa: new Tile(29),
+  /**  North wind */
+  Pei: new Tile(30),
+  /**  White dragon */
+  Haku: new Tile(31),
+  /**  Green dragon */
+  Hatsu: new Tile(32),
+  /**  Red dragon */
+  Chun: new Tile(33),
 };
 
 export const Terminals = [Tiles.Man1, Tiles.Man9, Tiles.Pin1, Tiles.Pin9, Tiles.Sou1, Tiles.Sou9];

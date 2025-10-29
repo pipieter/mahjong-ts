@@ -1,5 +1,7 @@
 import {
+  Akadora,
   Chinroutou,
+  Dora,
   Honrouto,
   Junchan,
   Pinfu,
@@ -9,6 +11,7 @@ import {
   SanshokuDoukou,
   Suuankou,
   Toitoi,
+  Uradora,
 } from ".";
 import { Hand } from "./hand";
 import { getWindTile, Honors, Terminals, Tiles } from "./tile";
@@ -97,6 +100,9 @@ export class Scorer {
       new Suuankou(),
       new SanshokuDoujun(),
       new SanshokuDoukou(),
+      new Dora(),
+      new Uradora(),
+      new Akadora(),
     ];
   }
 

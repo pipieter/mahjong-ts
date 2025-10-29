@@ -85,6 +85,10 @@ export enum YakuId {
   Ryuuiisou = 43,
   Chinroutou = 44,
   Suuankou = 51,
+  // Dora
+  Dora = 52,
+  Uradora = 53,
+  Akadora = 54,
 }
 
 export abstract class Yaku {
