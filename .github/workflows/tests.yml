@@ -3,13 +3,16 @@ name: TESTS
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     name: test
     steps:
-      - uses: ./.github/actions/setup
+      - name: Setup
+        uses: ./.github/actions/setup
 
-      - name: Run unit-tests
+      - name: Run tests
         run: npm run test
