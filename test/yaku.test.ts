@@ -31,8 +31,10 @@ import {
   WestSeat,
 } from "../src/yaku/yakuhai";
 import {
+  Akadora,
   Chiniisou,
   Chinroutou,
+  Dora,
   Honrouto,
   Junchan,
   Pinfu,
@@ -42,6 +44,7 @@ import {
   SanshokuDoukou,
   Shousangen,
   Toitoi,
+  Uradora,
 } from "../src";
 
 describe("yaku tanyao", () => {
@@ -1248,5 +1251,44 @@ describe("yaku pinfu", () => {
 
       expect(pinfu.check(hand, config)).toEqual(han);
     }
+  });
+});
+
+describe("yaku dora", () => {
+  test("dora count", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou1, Tiles.Sou2, Tiles.Sou3, Tiles.Man1, Tiles.Man2, Tiles.Man3, Tiles.Pin1, Tiles.Pin2, Tiles.Pin3, Tiles.Pin5, Tiles.Pin5, Tiles.Haku, Tiles.Haku, Tiles.Haku];
+    const hand = verifyUnique(tiles);
+
+    const dora = new Dora();
+    const uradora = new Uradora();
+    const akadora = new Akadora();
+
+    const config = mockConfig();
+    config.dora = [Tiles.Sou9, Tiles.Pin7];
+    config.uradora = [Tiles.Chun, Tiles.Pin4];
+    config.akadora = 1;
+    config.riichi = RiichiCall.Riichi;
+
+    expect(dora.check(hand, config)).toEqual(1);
+    expect(uradora.check(hand, config)).toEqual(5);
+    expect(akadora.check(hand, config)).toEqual(1);
+  });
+
+  test("uradora does not apply when not in riichi", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou1, Tiles.Sou2, Tiles.Sou3, Tiles.Man1, Tiles.Man2, Tiles.Man3, Tiles.Pin1, Tiles.Pin2, Tiles.Pin3, Tiles.Pin5, Tiles.Pin5, Tiles.Haku, Tiles.Haku, Tiles.Haku];
+    const hand = verifyUnique(tiles);
+
+    const dora = new Dora();
+    const uradora = new Uradora();
+
+    const config = mockConfig();
+    config.dora = [Tiles.Sou9, Tiles.Pin7];
+    config.uradora = [Tiles.Chun, Tiles.Pin4];
+    config.riichi = RiichiCall.None;
+
+    expect(dora.check(hand, config)).toEqual(1);
+    expect(uradora.check(hand, config)).toEqual(0);
   });
 });
