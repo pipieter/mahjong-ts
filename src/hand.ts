@@ -1,25 +1,5 @@
-import { Honors, Suit, Terminals, Tile } from "./tile";
-import { orderedPermutationsOfLength } from "./util";
-
-/**
- * Remove all tiles in an array from an array. This removes the first occurrence of each element
- * in the array and ignores elements that are not in the array.
- * @param array The original array containing the elements.
- * @param remove The elements to remove.
- * @returns A copy of the original array with the elements removed.
- */
-function removeFromArray(array: readonly Tile[], toRemove: readonly Tile[]): Tile[] {
-  const copy = [...array]; // Create a copy
-
-  for (const element of toRemove) {
-    const index = copy.findIndex((tile) => tile.id === element.id);
-    if (index > -1) {
-      copy.splice(index, 1);
-    }
-  }
-
-  return copy;
-}
+import { Honors, Suit, Terminals, Tile, Tiles } from "./tile";
+import { findMeldsAndPair, orderedPermutationsOfLength, removeFromArray } from "./util";
 
 export class Meld {
   public readonly tiles: Tile[];
@@ -81,6 +61,19 @@ export class Meld {
     return true;
   }
 
+  public isOpen(): boolean {
+    return this.open;
+  }
+
+  public isClosed(): boolean {
+    return !this.open;
+  }
+
+  public hasTile(tile: Tile): boolean {
+    const ids = this.tiles.map((tile) => tile.id);
+    return ids.includes(tile.id);
+  }
+
   public toString(): string {
     const tiles = [...this.tiles];
     tiles.sort((a, b) => a.id - b.id);
@@ -133,24 +126,11 @@ export class Hand {
   private static findRegular(tiles: Tile[], melds: Meld[]): Hand[] {
     // TODO ensure regular hands have four melds and one pair
 
-    if (tiles.length < 2) {
-      return [];
-    }
+    const hands: Hand[] = [];
+    const meldsAndPairsCombinations = findMeldsAndPair(tiles);
 
-    if (tiles.length === 2) {
-      const pair = new Meld(tiles, false);
-      if (!pair.isPair()) return [];
-      return [new Hand([...melds, pair])];
-    }
-
-    // At least three tiles remaining
-    const hands = [];
-    const permutations = orderedPermutationsOfLength(tiles, 3);
-    for (const permutation of permutations) {
-      const meld = new Meld(permutation, false);
-      if (!meld.isTriplet()) continue;
-
-      hands.push(...Hand.findRegular(removeFromArray(tiles, permutation), [...melds, meld]));
+    for (const combination of meldsAndPairsCombinations) {
+      hands.push(new Hand([...combination, ...melds]));
     }
 
     return hands;
@@ -170,7 +150,7 @@ export class Hand {
         return [];
       }
       tiles = removeFromArray(tiles, pair);
-      pairs.push(new Meld(pair, true));
+      pairs.push(new Meld(pair, false));
     }
 
     return [new Hand(pairs)];
@@ -197,5 +177,20 @@ export class Hand {
 
   public isClosed(): boolean {
     return !this.isOpen();
+  }
+}
+
+export class Waits {
+  public static find(tiles: Tile[], melds: Meld[]): Tile[] {
+    const waits: Tile[] = [];
+
+    for (const tile of Object.values(Tiles)) {
+      const hands = Hand.find([...tiles, tile], melds);
+      if (hands.length > 0) {
+        waits.push(tile);
+      }
+    }
+
+    return waits;
   }
 }

@@ -1,0 +1,148 @@
+import { describe, expect, test } from "@jest/globals";
+import { mockConfig, verifyUnique } from "./mock";
+import { Daisangen, Wind, Chiihou, Tenhou, Tiles, Ryuuiisou, Chinroutou, Suuankou } from "../src";
+
+describe("yakuman ryuuiisou", () => {
+  test("all greens results in yakuman", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou2, Tiles.Sou2, Tiles.Sou2, Tiles.Sou3, Tiles.Sou3, Tiles.Sou3, Tiles.Sou6, Tiles.Sou6, Tiles.Sou6, Tiles.Hatsu, Tiles.Hatsu, Tiles.Hatsu, Tiles.Sou4, Tiles.Sou4]);
+
+    const ryuuiisou = new Ryuuiisou();
+    const config = mockConfig();
+
+    expect(ryuuiisou.check(hand, config)).toEqual(13);
+  });
+});
+
+describe("yakuman tenhou and chiihou", () => {
+  test("turn one dealer tsumo is tenhou", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Man1, Tiles.Man2, Tiles.Man3, Tiles.Pin1, Tiles.Pin2, Tiles.Pin2, Tiles.Pin3, Tiles.Pin3, Tiles.Pin4, Tiles.Pin5, Tiles.Pin6, Tiles.Pin7, Tiles.Pin8, Tiles.Pin8]);
+
+    const tenhou = new Tenhou();
+    const config = mockConfig();
+    config.tsumo = true;
+    config.seat = Wind.Ton;
+    config.turn = 1;
+
+    expect(tenhou.check(hand, config)).toEqual(13);
+  });
+
+  test("turn one non-dealer tsumo is chiihou", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Man1, Tiles.Man2, Tiles.Man3, Tiles.Pin1, Tiles.Pin2, Tiles.Pin2, Tiles.Pin3, Tiles.Pin3, Tiles.Pin4, Tiles.Pin5, Tiles.Pin6, Tiles.Pin7, Tiles.Pin8, Tiles.Pin8]);
+
+    const chiihou = new Chiihou();
+    const config = mockConfig();
+    config.tsumo = true;
+    config.seat = Wind.Nan;
+    config.turn = 1;
+
+    expect(chiihou.check(hand, config)).toEqual(13);
+  });
+
+  test("chiihou and tenhou are incompatible", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Man1, Tiles.Man2, Tiles.Man3, Tiles.Pin1, Tiles.Pin2, Tiles.Pin2, Tiles.Pin3, Tiles.Pin3, Tiles.Pin4, Tiles.Pin5, Tiles.Pin6, Tiles.Pin7, Tiles.Pin8, Tiles.Pin8]);
+
+    const tenhou = new Tenhou();
+    const chiihou = new Chiihou();
+
+    const config = mockConfig();
+    config.tsumo = true;
+    config.turn = 1;
+
+    for (const wind of Object.values(Wind)) {
+      config.seat = wind as Wind;
+
+      expect(chiihou.check(hand, config)).not.toEqual(tenhou.check(hand, config));
+    }
+  });
+});
+
+describe("yakuman ryuuiisou", () => {
+  test("three dragons results in yakuman", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Hatsu, Tiles.Hatsu, Tiles.Hatsu, Tiles.Haku, Tiles.Haku, Tiles.Haku, Tiles.Chun, Tiles.Chun, Tiles.Chun, Tiles.Pin2, Tiles.Pin2, Tiles.Pin2, Tiles.Sou4, Tiles.Sou4]);
+
+    const daisangen = new Daisangen();
+    const config = mockConfig();
+
+    expect(daisangen.check(hand, config)).toEqual(13);
+  });
+
+  test("three dragons requires all three dragon pairs", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Hatsu, Tiles.Hatsu, Tiles.Hatsu, Tiles.Haku, Tiles.Haku, Tiles.Haku, Tiles.Chun, Tiles.Chun, Tiles.Pin2, Tiles.Pin2, Tiles.Pin2, Tiles.Sou4, Tiles.Sou4, Tiles.Sou4]);
+
+    const daisangen = new Daisangen();
+    const config = mockConfig();
+
+    expect(daisangen.check(hand, config)).toEqual(0);
+  });
+});
+
+describe("yakuman chinroutou", () => {
+  test("all terminals results in yakuman", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou9, Tiles.Sou9, Tiles.Sou9, Tiles.Man1,Tiles.Man1, Tiles.Man1, Tiles.Man9, Tiles.Man9, Tiles.Man9, Tiles.Pin1, Tiles.Pin1]);
+
+    const chinroutou = new Chinroutou();
+    const config = mockConfig();
+
+    expect(chinroutou.check(hand, config)).toEqual(13);
+  });
+
+  test("chinroutou cannot contain non-terminals", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Sou2, Tiles.Sou2, Tiles.Sou2, Tiles.Sou9, Tiles.Sou9, Tiles.Sou9, Tiles.Man1,Tiles.Man1, Tiles.Man1, Tiles.Man9, Tiles.Man9, Tiles.Man9, Tiles.Pin1, Tiles.Pin1]);
+
+    const chinroutou = new Chinroutou();
+    const config = mockConfig();
+
+    expect(chinroutou.check(hand, config)).toEqual(0);
+  });
+
+  test("chinroutou cannot contain honors", () => {
+    // prettier-ignore
+    const hand = verifyUnique([Tiles.Haku, Tiles.Haku, Tiles.Haku, Tiles.Sou9, Tiles.Sou9, Tiles.Sou9, Tiles.Man1,Tiles.Man1, Tiles.Man1, Tiles.Man9, Tiles.Man9, Tiles.Man9, Tiles.Pin1, Tiles.Pin1]);
+
+    const chinroutou = new Chinroutou();
+    const config = mockConfig();
+
+    expect(chinroutou.check(hand, config)).toEqual(0);
+  });
+});
+
+describe("yakuman suuankou", () => {
+  test("four concealed triplets result in yakuman", () => {
+    // prettier-ignore
+    const tiles = [Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou5, Tiles.Sou5, Tiles.Sou5, Tiles.Man2, Tiles.Man2, Tiles.Man2, Tiles.Pin4, Tiles.Pin4, Tiles.Pin4, Tiles.Haku, Tiles.Haku];
+    const hand = verifyUnique(tiles);
+
+    const suuankou = new Suuankou();
+    const config = mockConfig();
+    config.tsumo = true;
+    config.agari = Tiles.Sou1;
+
+    expect(suuankou.check(hand, config)).toEqual(13);
+  });
+
+  test("suuankou is invalid if triplet completed on ron", () => {
+    const tsumos: [boolean, number][] = [
+      [true, 13],
+      [false, 0],
+    ];
+    // prettier-ignore
+    const tiles = [Tiles.Sou1, Tiles.Sou1, Tiles.Sou1, Tiles.Sou5, Tiles.Sou5, Tiles.Sou5, Tiles.Man2, Tiles.Man2, Tiles.Man2, Tiles.Pin4, Tiles.Pin4, Tiles.Pin4, Tiles.Haku, Tiles.Haku];
+    const hand = verifyUnique(tiles);
+    const suuankou = new Suuankou();
+    const config = mockConfig();
+    config.agari = Tiles.Sou1;
+
+    for (const [tsumo, han] of tsumos) {
+      config.tsumo = tsumo;
+      expect(suuankou.check(hand, config)).toEqual(han);
+    }
+  });
+});

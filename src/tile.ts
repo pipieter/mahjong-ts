@@ -73,3 +73,23 @@ export const Tiles = {
 
 export const Terminals = [Tiles.Man1, Tiles.Man9, Tiles.Pin1, Tiles.Pin9, Tiles.Sou1, Tiles.Sou9];
 export const Honors = [Tiles.Ton, Tiles.Nan, Tiles.Shaa, Tiles.Pei, Tiles.Haku, Tiles.Hatsu, Tiles.Chun];
+
+export enum Wind {
+  /** East wind */
+  Ton,
+  /** South wind */
+  Nan,
+  /** West wind */
+  Shaa,
+  /** North wind */
+  Pei,
+}
+
+export function getWindTile(wind: Wind): Tile {
+  const map = {};
+  map[Wind.Ton] = Tiles.Ton;
+  map[Wind.Nan] = Tiles.Nan;
+  map[Wind.Shaa] = Tiles.Shaa;
+  map[Wind.Pei] = Tiles.Pei;
+  return map[wind];
+}
