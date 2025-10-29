@@ -10,8 +10,9 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "lint": "eslint .",
+    "lint": "eslint . --fix",
     "prettier": "prettier src/*.ts src/**/*.ts test/*.ts --write",
+    "format": "npm run lint && npm run prettier",
     "prepare": "npm run build"
   },
   "dependencies": {
