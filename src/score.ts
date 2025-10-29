@@ -56,7 +56,8 @@ export interface Score {
 }
 
 export class Scorer {
-  public readonly yakus: Yaku[];
+  private readonly config: YakuConfig;
+  private readonly yakus: Yaku[];
 
   constructor() {
     this.yakus = [
@@ -122,6 +123,15 @@ export class Scorer {
     }
 
     return score;
+  }
+
+  public yaku(id: YakuId): Yaku | undefined {
+    for (const yaku of this.yakus) {
+      if (yaku.id === id) {
+        return yaku;
+      }
+    }
+    return undefined;
   }
 
   public fu(hand: Hand, config: YakuConfig): number {
