@@ -1,5 +1,5 @@
 import { Honors, Suit, Terminals, Tile, Tiles } from "./tile";
-import { findMeldsAndPair, orderedPermutationsOfLength, removeFromArray } from "./util";
+import { findMeldsAndPair, removeFromArray } from "./util";
 
 export class Meld {
   public readonly tiles: Tile[];

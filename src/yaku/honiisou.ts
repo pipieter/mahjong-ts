@@ -1,5 +1,5 @@
 import { Hand } from "../hand";
-import { Suit, Tile } from "../tile";
+import { Suit } from "../tile";
 import { Yaku, YakuConfig, YakuId } from "./yaku";
 
 export class Honiisou extends Yaku {

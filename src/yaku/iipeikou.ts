@@ -1,5 +1,4 @@
 import { Hand } from "../hand";
-import { Honors, Terminals } from "../tile";
 import { Yaku, YakuConfig, YakuId } from "./yaku";
 
 export class Iipeikou extends Yaku {
