@@ -53,7 +53,7 @@ export interface Score {
 }
 
 export class Scorer {
-  private readonly config: ScoreConfig;
+  private readonly config: YakuConfig;
   private readonly yakus: Yaku[];
 
   constructor() {
