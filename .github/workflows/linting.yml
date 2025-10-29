@@ -1,0 +1,40 @@
+name: LINTING
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: lint
+    steps:
+      - name: Check out source repository
+        uses: actions/checkout@v5
+        with:
+          submodules: recursive
+
+      - name: Setup
+        uses: ./.github/actions/setup
+
+      - name: Run eslint
+      # Based on the npm run lint command
+        run: npx eslint .
+
+  prettier:
+    runs-on: ubuntu-latest
+    name: prettier
+    steps:
+      - name: Check out source repository
+        uses: actions/checkout@v5
+        with:
+          submodules: recursive
+
+      - name: Setup
+        uses: ./.github/actions/setup
+
+      - name: Run prettier
+        # Based on the npm run prettier command
+        run: npx prettier src/*.ts src/**/*.ts test/*.ts
