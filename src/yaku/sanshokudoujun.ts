@@ -13,7 +13,7 @@ export class SanshokuDoujun extends Yaku {
     const tiles = [...meld.tiles];
     tiles.sort();
     let simplified = 0;
-    for (let tile of tiles) {
+    for (const tile of tiles) {
       simplified = simplified * 10 + tile.number();
     }
     return simplified;
